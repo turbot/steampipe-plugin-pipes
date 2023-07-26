@@ -123,7 +123,7 @@ func tablePipesOrganizationMember(_ context.Context) *plugin.Table {
 //// LIST FUNCTION
 
 func listOrganizationMembers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	org := h.Item.(openapi.Org)
+	org := h.Item.(*openapi.Org)
 
 	// If the requested number of items is less than the paging max limit
 	// set the limit to that instead

@@ -50,6 +50,7 @@ func tablePipesUser(_ context.Context) *plugin.Table {
 				Name:        "avatar_url",
 				Description: "The avatar URL of the user.",
 				Type:        proto.ColumnType_STRING,
+				Transform:   transform.FromCamel(),
 			},
 			{
 				Name:        "created_at",
