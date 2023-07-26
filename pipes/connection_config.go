@@ -45,7 +45,7 @@ func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, 
 
 	token := os.Getenv("STEAMPIPE_CLOUD_TOKEN")
 	// If `STEAMPIPE_CLOUD_TOKEN` is not set - we try to get the token from `PIPES_TOKEN`
-	if token != "" {
+	if token == "" {
 		token = os.Getenv("PIPES_TOKEN")
 	}
 	// token value present in the config takes precedence over environment variable
@@ -61,8 +61,8 @@ func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, 
 
 	host := os.Getenv("STEAMPIPE_CLOUD_HOST")
 	// If `STEAMPIPE_CLOUD_HOST` is not set - we try to get the token from `PIPES_HOST`
-	if token != "" {
-		token = os.Getenv("PIPES_HOST")
+	if host == "" {
+		host = os.Getenv("PIPES_HOST")
 	}
 	// host value present in the config takes precedence over environment variable
 	if pipesConfig.Host != nil {
