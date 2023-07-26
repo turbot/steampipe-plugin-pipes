@@ -1,0 +1,111 @@
+package pipes
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/url"
+	"os"
+	"strings"
+
+	openapiclient "github.com/turbot/pipes-sdk-go"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
+)
+
+type pipesConfig struct {
+	Token *string `cty:"token"`
+	Host  *string `cty:"host"`
+}
+
+var ConfigSchema = map[string]*schema.Attribute{
+	"token": {
+		Type: schema.TypeString,
+	},
+	"host": {
+		Type: schema.TypeString,
+	},
+}
+
+func ConfigInstance() interface{} {
+	return &pipesConfig{}
+}
+
+// GetConfig :: retrieve and cast connection config from query data
+func GetConfig(connection *plugin.Connection) pipesConfig {
+	if connection == nil || connection.Config == nil {
+		return pipesConfig{}
+	}
+	config, _ := connection.Config.(pipesConfig)
+	return config
+}
+
+func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, error) {
+	pipesConfig := GetConfig(d.Connection)
+
+	token := os.Getenv("STEAMPIPE_CLOUD_TOKEN")
+	// If `STEAMPIPE_CLOUD_TOKEN` is not set - we try to get the token from `PIPES_TOKEN`
+	if token != "" {
+		token = os.Getenv("PIPES_TOKEN")
+	}
+	// token value present in the config takes precedence over environment variable
+	if pipesConfig.Token != nil {
+		token = *pipesConfig.Token
+	}
+	if token == "" {
+		return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
+	}
+
+	configuration := openapiclient.NewConfiguration()
+	configuration.AddDefaultHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	host := os.Getenv("STEAMPIPE_CLOUD_HOST")
+	// If `STEAMPIPE_CLOUD_HOST` is not set - we try to get the token from `PIPES_HOST`
+	if token != "" {
+		token = os.Getenv("PIPES_HOST")
+	}
+	// host value present in the config takes precedence over environment variable
+	if pipesConfig.Host != nil {
+		host = *pipesConfig.Host
+	}
+
+	if host != "" && !strings.Contains(host, "cloud.steampipe.io") && !strings.Contains(host, "pipes.turbot.com") {
+		parsedURL, parseErr := url.Parse(host)
+		if parseErr != nil {
+			return nil, fmt.Errorf(`invalid host: %v`, parseErr)
+		}
+		if parsedURL.Host == "" {
+			return nil, errors.New(`missing protocol or host`)
+		}
+
+		// Parse and frame the Primary Servers
+		var primaryServers []openapiclient.ServerConfiguration
+		for _, server := range configuration.Servers {
+			serverURL, parseErr := url.Parse(server.URL)
+			if parseErr != nil {
+				return nil, fmt.Errorf(`invalid host: %v`, parseErr)
+			}
+			primaryServers = append(primaryServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: "Local API"})
+		}
+		configuration.Servers = primaryServers
+
+		// Parse and frame the Operation Servers
+		operationServers := make(map[string]openapiclient.ServerConfigurations)
+		for service, servers := range configuration.OperationServers {
+			var serviceServers []openapiclient.ServerConfiguration
+			for _, server := range servers {
+				serverURL, parseErr := url.Parse(server.URL)
+				if parseErr != nil {
+					return nil, fmt.Errorf(`invalid host: %v`, parseErr)
+				}
+				serviceServers = append(serviceServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: "Local API"})
+			}
+			operationServers[service] = serviceServers
+		}
+		configuration.OperationServers = operationServers
+	}
+
+	apiClient := openapiclient.NewAPIClient(configuration)
+
+	return apiClient, nil
+}
