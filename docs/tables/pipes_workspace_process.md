@@ -13,7 +13,7 @@ Optional quals are supported for the following columns:
 - `identity_handle`
 - `identity_id`
 - `pipeline_id`
-- `query_where` - Allows use of [query filters](https://steampipe.io/docs/cloud/reference/query-filter). For a list of supported columns for workspace proceses, please see [Supported APIs and Columns](https://steampipe.io/docs/cloud/reference/query-filter#supported-apis--columns). Please note that any query filter passed into the `query_where` qual will be combined with other optional quals.
+- `query_where` - Allows use of [query filters](https://turbot.com/pipes/docs/reference/query-filter). For a list of supported columns for workspace proceses, please see [Supported APIs and Columns](https://turbot.com/pipes/docs/reference/query-filter#supported-apis--columns). Please note that any query filter passed into the `query_where` qual will be combined with other optional quals.
 - `state`
 - `type`
 - `updated_at`
@@ -72,7 +72,7 @@ where
   and state = 'running';
 ```
 
-### List running processes for a pipeline using [query filter](https://steampipe.io/docs/cloud/reference/query-filter)
+### List running processes for a pipeline using [query filter](https://turbot.com/pipes/docs/reference/query-filter)
 
 ```sql
 select

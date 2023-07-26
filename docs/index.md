@@ -74,7 +74,7 @@ connection "pipes" {
 }
 ```
 
-- `token` (required) - [API tokens](https://steampipe.io/docs/cloud/profile#api-tokens) can be used to access the Turbot Pipes API or to connect to Turbot Pipes workspaces from the Steampipe CLI. May alternatively be set via the `PIPES_TOKEN` environment variable.
+- `token` (required) - [API tokens](https://turbot.com/pipes/docs/profile#tokens) can be used to access the Turbot Pipes API or to connect to Turbot Pipes workspaces from the Steampipe CLI. May alternatively be set via the `PIPES_TOKEN` environment variable.
 - `host` (optional) The Turbot Pipes Host URL. This defaults to `https://pipes.turbot.com`. You only need to set this if you are connecting to a remote Turbot Pipes database that is NOT hosted in `https://pipes.turbot.com`. This can also be set via the `PIPES_HOST` environment variable.
 
 ## Get Involved

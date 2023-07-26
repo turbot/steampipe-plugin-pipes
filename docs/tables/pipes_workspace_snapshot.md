@@ -12,7 +12,7 @@ Optional quals are supported for the following columns:
 - `dashboard_name`
 - `dashboard_title`
 - `id`
-- `query_where` - Allows use of [query filters](https://steampipe.io/docs/cloud/reference/query-filter). For a list of supported columns for snapshots, please see [Supported APIs and Columns](https://steampipe.io/docs/cloud/reference/query-filter#supported-apis--columns). Please note that any query filter passed into the `query_where` qual will be combined with other optional quals.
+- `query_where` - Allows use of [query filters](https://turbot.com/pipes/docs/reference/query-filter). For a list of supported columns for snapshots, please see [Supported APIs and Columns](https://turbot.com/pipes/docs/reference/query-filter#supported-apis--columns). Please note that any query filter passed into the `query_where` qual will be combined with other optional quals.
 - `visibility`
 
 ## Examples
@@ -106,7 +106,7 @@ where
   and id = 'snap_cc1ini7m1tujk0r0oqvg_12fie4ah78yl5rwadj7p6j63';
 ```
 
-### List snapshots for the AWS Tags Limit benchmark dashboard executed in the last 7 days using [query filter](https://steampipe.io/docs/cloud/reference/query-filter)
+### List snapshots for the AWS Tags Limit benchmark dashboard executed in the last 7 days using [query filter](https://turbot.com/pipes/docs/reference/query-filter)
 
 ```sql
 select
