@@ -6,7 +6,7 @@ Use SQL to query workspaces, connections and more from Turbot Pipes.
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/pipes)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/pipes/tables)
-- Community: [Slack Channel](https://turbot.com/community/join)
+- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-pipes/issues)
 
 ## Quick start
