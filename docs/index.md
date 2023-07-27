@@ -62,20 +62,24 @@ connection "pipes" {
   plugin = "pipes"
 
   # Turbot Pipes API token. If `token` is not specified, it will be loaded
-  # from the `PIPES_TOKEN` environment variable.
+  # from the `STEAMPIPE_CLOUD_TOKEN` environment variable and if not found
+  # there will fallback to the `PIPES_TOKEN` environment variable. If both
+  # are set simultaneously, `STEAMPIPE_CLOUD_TOKEN` will take preference.
   # token = "tpt_thisisnotarealtoken_123"
 
   # Turbot Pipes host URL. This defaults to "https://pipes.turbot.com".
   # You only need to set this if connecting to a remote Turbot Pipes database
   # not hosted in "https://pipes.turbot.com".
-  # If `host` is not specified, it will be loaded from the `PIPES_HOST`
-  # environment variable.
+  # If `host` is not specified, it will be loaded from the `STEAMPIPE_CLOUD_HOST`
+  # environment variable and if not found there will fallback to the
+  # `PIPES_HOST` environment variable. If both are set simultaneously,
+  # `STEAMPIPE_CLOUD_HOST` will take preference.
   # host = "https://pipes.turbot.com"
 }
 ```
 
-- `token` (required) - [API tokens](https://turbot.com/pipes/docs/profile#tokens) can be used to access the Turbot Pipes API or to connect to Turbot Pipes workspaces from the Steampipe CLI. May alternatively be set via the `PIPES_TOKEN` environment variable.
-- `host` (optional) The Turbot Pipes Host URL. This defaults to `https://pipes.turbot.com`. You only need to set this if you are connecting to a remote Turbot Pipes database that is NOT hosted in `https://pipes.turbot.com`. This can also be set via the `PIPES_HOST` environment variable.
+- `token` (required) - [API tokens](https://turbot.com/pipes/docs/profile#tokens) can be used to access the Turbot Pipes API or to connect to Turbot Pipes workspaces from the Steampipe CLI. May alternatively be set via the `STEAMPIPE_CLOUD_TOKEN` or `PIPES_TOKEN`. Note that the value in `STEAMPIPE_CLOUD_TOKEN` will take preference if both are set.
+- `host` (optional) The Turbot Pipes Host URL. This defaults to `https://pipes.turbot.com`. You only need to set this if you are connecting to a remote Turbot Pipes database that is NOT hosted in `https://pipes.turbot.com`. This can also be set via the `STEAMPIPE_CLOUD_HOST` or `PIPES_HOST`. Note that the value in `STEAMPIPE_CLOUD_HOST` will take preference if both are set.
 
 ## Get Involved
 
