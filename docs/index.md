@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["saas"]
 icon_url: "/images/plugins/turbot/pipes.svg"
-brand_color: "#a42a2d"
+brand_color: "#FABF1B"
 display_name: "Turbot Pipes"
 short_name: "pipes"
 description: "Steampipe plugin for querying workspaces, connections and more from Turbot Pipes."
