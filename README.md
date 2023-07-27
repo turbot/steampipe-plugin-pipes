@@ -6,7 +6,7 @@ Use SQL to query workspaces, connections and more from Turbot Pipes.
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/pipes)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/pipes/tables)
-- Community: [Slack Channel](https://turbot.com/community/join)
+- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-pipes/issues)
 
 ## Quick start
@@ -27,11 +27,11 @@ select
 from
   pipes_organization_member
 where
-  status = 'accepted'
+  status = 'accepted';
 ```
 
 ```
-> select user_handle, email, status from pipes_organization_member where status = 'accepted'
+> select user_handle, email, status from pipes_organization_member where status = 'accepted';
 +-------------+------------------+----------+
 | user_handle | email            | status   |
 +-------------+------------------+----------+
@@ -85,5 +85,5 @@ Please see the [contribution guidelines](https://github.com/turbot/steampipe/blo
 
 `help wanted` issues:
 
-- [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)
 - [Turbot Pipes Plugin](https://github.com/turbot/steampipe-plugin-pipes/labels/help%20wanted)
+- [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)

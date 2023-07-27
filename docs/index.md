@@ -26,11 +26,11 @@ select
 from
   pipes_organization_member
 where
-  status = 'accepted'
+  status = 'accepted';
 ```
 
 ```
-> select user_handle, email, status from pipes_organization_member where status = 'accepted'
+> select user_handle, email, status from pipes_organization_member where status = 'accepted';
 +-------------+------------------+----------+
 | user_handle | email            | status   |
 +-------------+------------------+----------+
@@ -84,4 +84,4 @@ connection "pipes" {
 ## Get Involved
 
 - Open source: https://github.com/turbot/steampipe-plugin-pipes
-- Community: [Slack Channel](https://turbot.com/community/join)
+- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
