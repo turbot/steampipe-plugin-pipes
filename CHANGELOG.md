@@ -3,7 +3,7 @@
 _What's new?_
 
 - New tables added
-  - [steampipecloud_workspace_aggregator](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_aggregator) ([#35](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/35))
+  - [pipes_workspace_aggregator](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_aggregator) ([#35](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/35))
 
 ## v0.9.0 [2023-04-10]
 
@@ -16,23 +16,23 @@ _Dependencies_
 _What's new?_
 
 - New tables added
-  - [steampipecloud_process](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_process) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
-  - [steampipecloud_workspace_pipeline](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_pipeline) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
-  - [steampipecloud_workspace_process](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_process) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
+  - [pipes_process](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_process) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
+  - [pipes_workspace_pipeline](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_pipeline) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
+  - [pipes_workspace_process](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_process) ([#31](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/31))
 
 ## v0.7.0 [2022-12-27]
 
 _Enhancements_
 
-- Added column `expires_at` to `steampipecloud_workspace_snapshot` table. ([#29](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/29))
+- Added column `expires_at` to `pipes_workspace_snapshot` table. ([#29](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/29))
 
 ## v0.6.0 [2022-11-24]
 
 _What's new?_
 
 - New tables added
-  - [steampipecloud_user_email](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_user_email) ([#27](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/27))
-  - [steampipecloud_user_preferences](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_user_preferences) ([#27](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/27))
+  - [pipes_user_email](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_user_email) ([#27](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/27))
+  - [pipes_user_preferences](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_user_preferences) ([#27](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/27))
 
 _Dependencies_
 
@@ -49,35 +49,35 @@ _Dependencies_
 
 _Breaking changes_
 
-- Removed column `email` from `steampipecloud_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Removed column `email` from `steampipecloud_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Removed column `email` from `steampipecloud_user` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Renamed column `workspace_state` to `state` in `steampipecloud_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Renamed column `mod_constraint` to `constraint` in `steampipecloud_workspace_mod` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Renamed column `created_by_handle` to `created_by_id` to store the identifier of the person who created the setting for the variable in `steampipecloud_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Renamed column `updated_by_handle` to `updated_by_id` to store the identifier of the person who last updated the setting for the variable in `steampipecloud_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Removed column `email` from `pipes_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Removed column `email` from `pipes_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Removed column `email` from `pipes_user` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Renamed column `workspace_state` to `state` in `pipes_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Renamed column `mod_constraint` to `constraint` in `pipes_workspace_mod` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Renamed column `created_by_handle` to `created_by_id` to store the identifier of the person who created the setting for the variable in `pipes_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Renamed column `updated_by_handle` to `updated_by_id` to store the identifier of the person who last updated the setting for the variable in `pipes_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
 
 _What's new?_
 
 - New tables added
-  - [steampipecloud_workspace_db_log](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_db_log) ([#23](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/23))
-  - [steampipecloud_workspace_snapshot](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_snapshot) ([#22](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/22))
+  - [pipes_workspace_db_log](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_db_log) ([#23](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/23))
+  - [pipes_workspace_snapshot](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_snapshot) ([#22](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/22))
 
 _Enhancements_
 
-- Added `process_id` column to `steampipecloud_audit_log` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `created_by_id`, `created_by`, `updated_by_id`, `updated_by` columns to `steampipecloud_connection` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `created_by_id`, `updated_by_id` columns to `steampipecloud_organization` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization in `steampipecloud_organization` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `created_by_id`, `scope`, `updated_by_id`, `user` columns to `steampipecloud_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization member in `steampipecloud_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `created_by_id`, `updated_by_id`, `user` columns to `steampipecloud_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization workspace member in `steampipecloud_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `api_version`, `cli_version`, `created_by_id`, `host`, `updated_by_id` columns to `steampipecloud_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization workspace member in `steampipecloud_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `connection_handle`, `connection`, `created_by_id`, `created_by`, `identity_handle`, `identity_type`, `updated_by_id`, `updated_by`, `workspace_handle` columns to `steampipecloud_workspace_connection` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `created_by_id`, `created_by`, `identity_handle`, `updated_by_id`, `updated_by`, `version_id`, `workspace_handle` columns to `steampipecloud_workspace_mod` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
-- Added `version_id` column to `steampipecloud_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `process_id` column to `pipes_audit_log` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `created_by_id`, `created_by`, `updated_by_id`, `updated_by` columns to `pipes_connection` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `created_by_id`, `updated_by_id` columns to `pipes_organization` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization in `pipes_organization` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `created_by_id`, `scope`, `updated_by_id`, `user` columns to `pipes_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization member in `pipes_organization_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `created_by_id`, `updated_by_id`, `user` columns to `pipes_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization workspace member in `pipes_organization_workspace_member` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `api_version`, `cli_version`, `created_by_id`, `host`, `updated_by_id` columns to `pipes_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Updated columns `created_by`, `updated_by` to store additional information about the user who created or updated the organization workspace member in `pipes_workspace` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `connection_handle`, `connection`, `created_by_id`, `created_by`, `identity_handle`, `identity_type`, `updated_by_id`, `updated_by`, `workspace_handle` columns to `pipes_workspace_connection` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `created_by_id`, `created_by`, `identity_handle`, `updated_by_id`, `updated_by`, `version_id`, `workspace_handle` columns to `pipes_workspace_mod` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
+- Added `version_id` column to `pipes_workspace_mod_variable` table. ([#24](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/24))
 
 _Dependencies_
 
@@ -88,14 +88,14 @@ _Dependencies_
 _What's new?_
 
 - New tables added
-  - [steampipecloud_organization_workspace_member](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_organization_workspace_member) ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
+  - [pipes_organization_workspace_member](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_organization_workspace_member) ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
 
 _Enhancements_
 
-- Added `created_by` and `updated_by` columns to the `steampipecloud_organization` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
-- Added `created_by`, `org_handle`, and `updated_by` columns to the `steampipecloud_organization_member` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
-- Added `created_by`, `updated_by`, and `version_id` columns to the `steampipecloud_workspace` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
-- Added `GetConfig` to `steampipecloud_organization` and `steampipecloud_organization_member` tables. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
+- Added `created_by` and `updated_by` columns to the `pipes_organization` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
+- Added `created_by`, `org_handle`, and `updated_by` columns to the `pipes_organization_member` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
+- Added `created_by`, `updated_by`, and `version_id` columns to the `pipes_workspace` table. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
+- Added `GetConfig` to `pipes_organization` and `pipes_organization_member` tables. ([#19](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/19))
 
 _Dependencies_
 
@@ -106,8 +106,8 @@ _Dependencies_
 _What's new?_
 
 - New tables added
-  - [steampipecloud_workspace_mod](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_mod) ([#14](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/14))
-  - [steampipecloud_workspace_mod_variable](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace_mod_variable) ([#14](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/14))
+  - [pipes_workspace_mod](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_mod) ([#14](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/14))
+  - [pipes_workspace_mod_variable](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_mod_variable) ([#14](https://github.com/turbot/steampipe-plugin-steampipecloud/pull/14))
 
 ## v0.1.0 [2022-04-28]
 
@@ -121,11 +121,11 @@ _Enhancements_
 _What's new?_
 
 - New tables added
-  - [steampipecloud_audit_log](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_audit_log)
-  - [steampipecloud_connection](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_connection)
-  - [steampipecloud_organization](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_organization)
-  - [steampipecloud_organization_member](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_organization_member)
-  - [steampipecloud_token](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_token)
-  - [steampipecloud_user](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_user)
-  - [steampipecloud_workspace](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_workspace)
-  - [steampipecloud_workspace_connection](https://hub.steampipe.io/plugins/turbot/steampipecloud/tables/steampipecloud_connection)
+  - [pipes_audit_log](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_audit_log)
+  - [pipes_connection](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_connection)
+  - [pipes_organization](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_organization)
+  - [pipes_organization_member](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_organization_member)
+  - [pipes_token](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_token)
+  - [pipes_user](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_user)
+  - [pipes_workspace](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace)
+  - [pipes_workspace_connection](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_connection)
