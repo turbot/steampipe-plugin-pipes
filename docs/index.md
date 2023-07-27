@@ -26,11 +26,11 @@ select
 from
   pipes_organization_member
 where
-  status = 'accepted'
+  status = 'accepted';
 ```
 
 ```
-> select user_handle, email, status from pipes_organization_member where status = 'accepted'
+> select user_handle, email, status from pipes_organization_member where status = 'accepted';
 +-------------+------------------+----------+
 | user_handle | email            | status   |
 +-------------+------------------+----------+
