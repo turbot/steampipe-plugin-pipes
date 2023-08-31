@@ -2,7 +2,6 @@ package pipes
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -21,7 +20,7 @@ type IdentityWorkspaceDetails struct {
 }
 
 type SnapshotData struct {
-	Data string `json:"data"`
+	Data openapi.WorkspaceSnapshotData
 }
 
 //// TABLE DEFINITION
@@ -619,8 +618,7 @@ func getSnapshotData(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 				return nil, err
 			}
 		}
-		byteArr, _ := json.Marshal(response)
-		snapshotData.Data = string(byteArr)
+		snapshotData.Data = response
 		return nil, nil
 	}
 	_, err = plugin.RetryHydrate(ctx, d, h, getSnapshotData, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
