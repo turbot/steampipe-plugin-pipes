@@ -1,3 +1,9 @@
+## v0.11.1 [2023-08-31]
+
+_Bug fixes_
+
+- Fixed `data` column query errors in `pipes_workspace_snapshot` table. ([#5](https://github.com/turbot/steampipe-plugin-pipes/pull/5))
+
 ## v0.11.0 [2023-07-27]
 
 _What's new?_
