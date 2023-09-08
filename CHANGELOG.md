@@ -22,4 +22,3 @@ _What's new?_
   - [pipes_workspace_pipeline](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_pipeline)
   - [pipes_workspace_process](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_process)
   - [pipes_workspace_snapshot](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_workspace_snapshot)
-
