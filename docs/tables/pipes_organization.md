@@ -9,9 +9,7 @@ Users can create their own connections and workspaces, but they are not shared w
 ```sql
 select
   id,
-  org_id,
-  org_handle,
-  status
+  handle
 from
   pipes_organization;
 ```
