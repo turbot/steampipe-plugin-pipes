@@ -1,4 +1,4 @@
-module steampipe-plugin-pipes
+module github.com/turbot/steampipe-plugin-pipes
 
 go 1.21
 
