@@ -8,6 +8,7 @@ short_name: "pipes"
 description: "Steampipe plugin for querying workspaces, connections and more from Turbot Pipes."
 og_description: "Query Turbot Pipes with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/pipes-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Turbot Pipes + Steampipe
