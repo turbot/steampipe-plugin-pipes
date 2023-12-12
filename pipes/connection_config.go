@@ -10,21 +10,11 @@ import (
 
 	openapiclient "github.com/turbot/pipes-sdk-go"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type pipesConfig struct {
-	Token *string `cty:"token"`
-	Host  *string `cty:"host"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"token": {
-		Type: schema.TypeString,
-	},
-	"host": {
-		Type: schema.TypeString,
-	},
+	Token *string `hcl:"token"`
+	Host  *string `hcl:"host"`
 }
 
 func ConfigInstance() interface{} {
