@@ -8,13 +8,14 @@ short_name: "pipes"
 description: "Steampipe plugin for querying workspaces, connections and more from Turbot Pipes."
 og_description: "Query Turbot Pipes with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/pipes-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Turbot Pipes + Steampipe
 
 [Turbot Pipes](https://turbot.com/pipes) is an intelligence, automation & security platform built specifically for DevOps.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 For example:
 
