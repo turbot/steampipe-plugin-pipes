@@ -19,9 +19,7 @@ Analyze the status of different organizational entities within your system. This
 ```sql+postgres
 select
   id,
-  org_id,
-  org_handle,
-  status
+  handle
 from
   pipes_organization;
 ```
