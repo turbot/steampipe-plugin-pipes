@@ -1,3 +1,9 @@
+## v0.14.1 [TBD]
+
+_Bug fixes_
+
+- Authentication against a custom tenant in Pipes production gives a 401 error. ([#30](https://github.com/turbot/steampipe-plugin-pipes/pull/30))
+
 ## v0.14.0 [2023-12-12]
 
 _What's new?_
