@@ -21,7 +21,7 @@ func tablePipesAuditLog(_ context.Context) *plugin.Table {
 			Hydrate:    listAuditLogs,
 			KeyColumns: plugin.AnyColumn([]string{"identity_handle", "identity_id"}),
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for an audit log.",
@@ -97,7 +97,7 @@ func tablePipesAuditLog(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

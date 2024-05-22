@@ -50,7 +50,7 @@ func tablePipesWorkspaceAggregator(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.AllColumns([]string{"identity_handle", "workspace_handle", "handle"}),
 			Hydrate:    getWorkspaceAggregator,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the aggregator.",
@@ -145,7 +145,7 @@ func tablePipesWorkspaceAggregator(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

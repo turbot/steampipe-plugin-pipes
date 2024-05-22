@@ -19,7 +19,7 @@ func tablePipesUserEmail(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listUserEmails,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the user email.",
@@ -47,7 +47,7 @@ func tablePipesUserEmail(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

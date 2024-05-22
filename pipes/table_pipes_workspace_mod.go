@@ -31,7 +31,7 @@ func tablePipesWorkspaceMod(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.AllColumns([]string{"identity_id", "workspace_id", "alias"}),
 			Hydrate:    getWorkspaceMod,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the workspace mod.",
@@ -139,7 +139,7 @@ func tablePipesWorkspaceMod(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

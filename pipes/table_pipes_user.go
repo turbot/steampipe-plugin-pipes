@@ -19,7 +19,7 @@ func tablePipesUser(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: getUser,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the user.",
@@ -73,7 +73,7 @@ func tablePipesUser(_ context.Context) *plugin.Table {
 				Description: "The user's last updated time.",
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
-		},
+		}),
 	}
 }
 

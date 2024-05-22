@@ -20,7 +20,7 @@ func tablePipesWorkspaceDBLog(_ context.Context) *plugin.Table {
 			ParentHydrate: listWorkspaces,
 			Hydrate:       listWorkspaceDBLogs,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for a db log.",
@@ -81,7 +81,7 @@ func tablePipesWorkspaceDBLog(_ context.Context) *plugin.Table {
 				Description: "The time when the db log record was generated.",
 				Type:        proto.ColumnType_STRING,
 			},
-		},
+		}),
 	}
 }
 

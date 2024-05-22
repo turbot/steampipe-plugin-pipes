@@ -19,7 +19,7 @@ func tablePipesUserPreferences(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: getUserPreferences,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the user preferences.",
@@ -57,7 +57,7 @@ func tablePipesUserPreferences(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

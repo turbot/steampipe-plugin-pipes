@@ -23,7 +23,7 @@ func tablePipesOrganization(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.AllColumns([]string{"handle"}),
 			Hydrate:    getOrganization,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for a organization.",
@@ -89,7 +89,7 @@ func tablePipesOrganization(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 
