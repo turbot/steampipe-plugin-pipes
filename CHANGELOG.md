@@ -1,8 +1,18 @@
-## v0.14.1 [TBD]
+## v0.15.0 [2024-05-22]
+
+_Enhancements_
+
+- The `user_id` column has now been assigned as a connection key column across all the tables which facilitates more precise and efficient querying across multiple Kubernetes connections. ([#27](https://github.com/turbot/steampipe-plugin-pipes/pull/27))
+- The Plugin and the Steampipe Anywhere binaries are now built with the `netgo` package. ([#219](https://github.com/turbot/steampipe-plugin-kubernetes/pull/219))
+- Added the `version` flag to the plugin's Export tool. ([#65](https://github.com/turbot/steampipe-export/pull/65))
 
 _Bug fixes_
 
-- Authentication against a custom tenant in Pipes production gives a 401 error. ([#30](https://github.com/turbot/steampipe-plugin-pipes/pull/30))
+- Fixed `401` errors while trying to authenticate against a custom tenant in Pipes. ([#30](https://github.com/turbot/steampipe-plugin-pipes/pull/30))
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v5.10.1](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v5100-2024-04-10) that adds support for connection key columns. ([#27](https://github.com/turbot/steampipe-plugin-pipes/pull/27))
 
 ## v0.14.0 [2023-12-12]
 
