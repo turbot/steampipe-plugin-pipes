@@ -2,7 +2,7 @@
 
 _Enhancements_
 
-- The `user_id` column has now been assigned as a connection key column across all the tables which facilitates more precise and efficient querying across multiple Kubernetes connections. ([#27](https://github.com/turbot/steampipe-plugin-pipes/pull/27))
+- The `user_id` column has now been assigned as a connection key column across all the tables which facilitates more precise and efficient querying across multiple Pipes connections. ([#27](https://github.com/turbot/steampipe-plugin-pipes/pull/27))
 - The Plugin and the Steampipe Anywhere binaries are now built with the `netgo` package. ([#32](https://github.com/turbot/steampipe-plugin-pipes/pull/32))
 - Added the `version` flag to the plugin's Export tool. ([#65](https://github.com/turbot/steampipe-export/pull/65))
 
