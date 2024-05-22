@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/url"
 	"os"
-	"strings"
 
 	openapiclient "github.com/turbot/pipes-sdk-go"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
@@ -31,7 +30,7 @@ func GetConfig(connection *plugin.Connection) pipesConfig {
 }
 
 func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, error) {
-	pipesConfig := GetConfig(d.Connection)
+	config := GetConfig(d.Connection)
 
 	token := os.Getenv("STEAMPIPE_CLOUD_TOKEN")
 	// If `STEAMPIPE_CLOUD_TOKEN` is not set - we try to get the token from `PIPES_TOKEN`
@@ -39,8 +38,8 @@ func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, 
 		token = os.Getenv("PIPES_TOKEN")
 	}
 	// token value present in the config takes precedence over environment variable
-	if pipesConfig.Token != nil {
-		token = *pipesConfig.Token
+	if config.Token != nil {
+		token = *config.Token
 	}
 	if token == "" {
 		return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
@@ -55,11 +54,12 @@ func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, 
 		host = os.Getenv("PIPES_HOST")
 	}
 	// host value present in the config takes precedence over environment variable
-	if pipesConfig.Host != nil {
-		host = *pipesConfig.Host
+	if config.Host != nil {
+		host = *config.Host
 	}
 
-	if host != "" && !strings.Contains(host, "cloud.steampipe.io") && !strings.Contains(host, "pipes.turbot.com") {
+	// If there is no host in the config, we set default host to `pipes.turbot.com`
+	if host != "" {
 		parsedURL, parseErr := url.Parse(host)
 		if parseErr != nil {
 			return nil, fmt.Errorf(`invalid host: %v`, parseErr)
@@ -68,31 +68,33 @@ func connect(_ context.Context, d *plugin.QueryData) (*openapiclient.APIClient, 
 			return nil, errors.New(`missing protocol or host`)
 		}
 
-		// Parse and frame the Primary Servers
-		var primaryServers []openapiclient.ServerConfiguration
-		for _, server := range configuration.Servers {
-			serverURL, parseErr := url.Parse(server.URL)
-			if parseErr != nil {
-				return nil, fmt.Errorf(`invalid host: %v`, parseErr)
-			}
-			primaryServers = append(primaryServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: "Local API"})
-		}
-		configuration.Servers = primaryServers
-
-		// Parse and frame the Operation Servers
-		operationServers := make(map[string]openapiclient.ServerConfigurations)
-		for service, servers := range configuration.OperationServers {
-			var serviceServers []openapiclient.ServerConfiguration
-			for _, server := range servers {
+		if parsedURL.Host != "cloud.steampipe.io" && parsedURL.Host != "pipes.turbot.com" {
+			// Parse and frame the Primary Servers
+			var primaryServers []openapiclient.ServerConfiguration
+			for _, server := range configuration.Servers {
 				serverURL, parseErr := url.Parse(server.URL)
 				if parseErr != nil {
 					return nil, fmt.Errorf(`invalid host: %v`, parseErr)
 				}
-				serviceServers = append(serviceServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: "Local API"})
+				primaryServers = append(primaryServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: server.Description})
 			}
-			operationServers[service] = serviceServers
+			configuration.Servers = primaryServers
+
+			// Parse and frame the Operation Servers
+			operationServers := make(map[string]openapiclient.ServerConfigurations)
+			for service, servers := range configuration.OperationServers {
+				var serviceServers []openapiclient.ServerConfiguration
+				for _, server := range servers {
+					serverURL, parseErr := url.Parse(server.URL)
+					if parseErr != nil {
+						return nil, fmt.Errorf(`invalid host: %v`, parseErr)
+					}
+					serviceServers = append(serviceServers, openapiclient.ServerConfiguration{URL: fmt.Sprintf("%s://%s%s", serverURL.Scheme, parsedURL.Host, serverURL.Path), Description: server.Description})
+				}
+				operationServers[service] = serviceServers
+			}
+			configuration.OperationServers = operationServers
 		}
-		configuration.OperationServers = operationServers
 	}
 
 	apiClient := openapiclient.NewAPIClient(configuration)
