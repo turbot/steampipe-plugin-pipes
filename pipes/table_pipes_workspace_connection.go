@@ -27,7 +27,7 @@ func tablePipesWorkspaceConnection(_ context.Context) *plugin.Table {
 			ParentHydrate: listWorkspaces,
 			Hydrate:       listWorkspaceConnections,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the association.",
@@ -119,7 +119,7 @@ func tablePipesWorkspaceConnection(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

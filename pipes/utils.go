@@ -4,11 +4,50 @@ import (
 	"context"
 
 	openapi "github.com/turbot/pipes-sdk-go"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/memoize"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
-func getUserIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	cacheKey := "GetUserIdentity"
+func commonColumns(c []*plugin.Column) []*plugin.Column {
+	return append([]*plugin.Column{
+		{
+			Name:        "user_id",
+			Hydrate:     getUserIdentity,
+			Type:        proto.ColumnType_STRING,
+			Description: "The unique identifier for the user.",
+			Transform:   transform.FromField("Id"),
+		},
+	}, c...)
+}
+
+func getUserIdForConnection(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (any, error) {
+	user, err := getUserIdentityMemoize(ctx, d, h)
+	if err != nil {
+		return nil, err
+	}
+
+	return user.(openapi.User).Id, nil
+}
+
+var getUserIdentityMemoize = plugin.HydrateFunc(getUserIdentityUncached).Memoize(memoize.WithCacheKeyFunction(getUserIdentityCacheKey))
+
+func getUserIdentityCacheKey(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	key := "GetUserIdentity"
+	return key, nil
+}
+
+func getUserIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (any, error) {
+	user, err := getUserIdentityMemoize(ctx, d, h)
+	if err != nil {
+		return nil, err
+	}
+
+	return user.(openapi.User), nil
+}
+
+func getUserIdentityUncached(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 
 	// get the service connection for the service
 	svc, err := connect(ctx, d)
@@ -17,10 +56,10 @@ func getUserIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		return nil, err
 	}
 
-	// if found in cache, return the result
-	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
-		return cachedData.(openapi.User), nil
-	}
+	// // if found in cache, return the result
+	// if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+	// 	return cachedData.(openapi.User), nil
+	// }
 
 	var resp openapi.User
 
@@ -39,7 +78,7 @@ func getUserIdentity(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 	user := response.(openapi.User)
 
 	// save to extension cache
-	d.ConnectionManager.Cache.Set(cacheKey, user)
+	// d.ConnectionManager.Cache.Set(cacheKey, user)
 
 	return user, nil
 }

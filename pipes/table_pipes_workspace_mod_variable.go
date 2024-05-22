@@ -28,7 +28,7 @@ func tablePipesWorkspaceModVariable(_ context.Context) *plugin.Table {
 				},
 			},
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the workspace mod variable.",
@@ -121,7 +121,7 @@ func tablePipesWorkspaceModVariable(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 

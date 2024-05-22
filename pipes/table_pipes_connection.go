@@ -34,7 +34,7 @@ func tablePipesConnection(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.AllColumns([]string{"handle", "identity_handle"}),
 			Hydrate:    getConnection,
 		},
-		Columns: []*plugin.Column{
+		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
 				Description: "The unique identifier for the connection.",
@@ -117,7 +117,7 @@ func tablePipesConnection(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
-		},
+		}),
 	}
 }
 
