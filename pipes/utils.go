@@ -56,11 +56,6 @@ func getUserIdentityUncached(ctx context.Context, d *plugin.QueryData, h *plugin
 		return nil, err
 	}
 
-	// // if found in cache, return the result
-	// if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
-	// 	return cachedData.(openapi.User), nil
-	// }
-
 	var resp openapi.User
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
@@ -76,9 +71,6 @@ func getUserIdentityUncached(ctx context.Context, d *plugin.QueryData, h *plugin
 	}
 
 	user := response.(openapi.User)
-
-	// save to extension cache
-	// d.ConnectionManager.Cache.Set(cacheKey, user)
 
 	return user, nil
 }
