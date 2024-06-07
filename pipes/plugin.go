@@ -34,6 +34,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"pipes_process":                       tablePipesProcess(ctx),
 			"pipes_organization_workspace_member": tablePipesOrganizationWorkspaceMember(ctx),
 			"pipes_tenant":                        tablePipesTenant(ctx),
+			"pipes_tenant_member":                 tablePipesTenantMember(ctx),
 			"pipes_token":                         tablePipesToken(ctx),
 			"pipes_user":                          tablePipesUser(ctx),
 			"pipes_user_email":                    tablePipesUserEmail(ctx),
