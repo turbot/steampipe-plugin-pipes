@@ -17,12 +17,10 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 		Name:        "pipes_tenant_member",
 		Description: "Members of a Turbot Pipes tenant.",
 		List: &plugin.ListConfig{
-			ParentHydrate: listTenants,
 			Hydrate:       listTenantMembers,
-			KeyColumns:    plugin.OptionalColumns([]string{"tenant_id", "tenant_handle"}),
 		},
 		Get: &plugin.GetConfig{
-			KeyColumns: plugin.AllColumns([]string{"tenant_handle", "id"}),
+			KeyColumns: plugin.AllColumns([]string{"tenant_id", "user_handle"}),
 			Hydrate:    getTenantMember,
 		},
 		Columns: commonColumns([]*plugin.Column{
@@ -39,10 +37,10 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Transform:   transform.FromCamel(),
 			},
 			{
-				Name:        "tenant_handle",
-				Description: "The handle name of the tenant.",
+				Name:        "user_handle",
+				Description: "The handle name of a user.",
 				Type:        proto.ColumnType_STRING,
-				Transform:   transform.FromCamel(),
+				Transform:   transform.FromField("User.Handle"),
 			},
 			{
 				Name:        "member_id",
@@ -95,36 +93,26 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
+			{
+				Name:        "user",
+				Description: "The user details.",
+				Type:        proto.ColumnType_JSON,
+			},
 		}),
 	}
-}
-
-type tenantMember struct {
-	TenantHandle string
-	openapi.TenantUser
 }
 
 //// LIST FUNCTION
 
 func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	tenant := h.Item.(openapi.Tenant)
 
-	// Return nil for primary tenant.
-	// No, user will have owner access to the primary tenant.
-	if tenant.Handle == "turbot-pipes" {
-		return nil, nil
+	// List the members for the tenant to which the calling user is in.
+	// For an unqualified (no tenant ID filter) list call, only call list members for the tenant ID of the actor.
+	callerIdentity, err := getUserIdentity(ctx, d, h)
+	if err != nil {
+		return nil, err
 	}
-
-	tenantId := d.EqualsQualString("tenant_id")
-	tenantHandle := d.EqualsQualString("tenant_handle")
-
-	// Minimize API call
-	if tenantId != "" && tenantId != tenant.Id {
-		return nil, nil
-	}
-	if tenantHandle != "" && tenantHandle != tenant.Handle {
-		return nil, nil
-	}
+	user := callerIdentity.(openapi.User)
 
 	// Create Session
 	svc, err := connect(ctx, d)
@@ -155,12 +143,12 @@ func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 	for pagesLeft {
 		if resp.NextToken != nil {
 			listDetails = func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-				resp, _, err = svc.TenantMembers.List(ctx, tenant.Handle).NextToken(*resp.NextToken).Limit(maxResults).Execute()
+				resp, _, err = svc.TenantMembers.List(ctx, user.TenantId).NextToken(*resp.NextToken).Limit(maxResults).Execute()
 				return resp, err
 			}
 		} else {
 			listDetails = func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-				resp, _, err = svc.TenantMembers.List(ctx, tenant.Handle).Limit(maxResults).Execute()
+				resp, _, err = svc.TenantMembers.List(ctx, user.TenantId).Limit(maxResults).Execute()
 				return resp, err
 			}
 		}
@@ -176,7 +164,7 @@ func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 
 		if result.HasItems() {
 			for _, member := range *result.Items {
-				d.StreamListItem(ctx, &tenantMember{tenant.Handle, member})
+				d.StreamListItem(ctx, member)
 
 				// Context can be cancelled due to manual cancellation or the limit has been hit
 				if d.RowsRemaining(ctx) == 0 {
@@ -203,11 +191,11 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		plugin.Logger(ctx).Error("getTenantMember", "connection_error", err)
 		return nil, err
 	}
-	id := d.EqualsQuals["id"].GetStringValue()
-	tenantHandle := d.EqualsQuals["tenant_handle"].GetStringValue()
+	userHandle := d.EqualsQuals["user_handle"].GetStringValue()
+	tenantId := d.EqualsQuals["tenant_id"].GetStringValue()
 
 	// check if id is empty
-	if id == "" || tenantHandle == "" {
+	if userHandle == "" || tenantId == "" {
 		return nil, nil
 	}
 
@@ -215,7 +203,7 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	// execute get call
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-		resp, _, err = svc.TenantMembers.Get(ctx, tenantHandle, id).Execute()
+		resp, _, err = svc.TenantMembers.Get(ctx, tenantId, userHandle).Execute()
 		return resp, err
 	}
 
@@ -228,5 +216,5 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	res := response.(openapi.TenantUser)
 
-	return &tenantMember{tenantHandle, res}, nil
+	return res, nil
 }
