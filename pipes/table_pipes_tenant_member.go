@@ -17,7 +17,7 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 		Name:        "pipes_tenant_member",
 		Description: "Members of a Turbot Pipes tenant.",
 		List: &plugin.ListConfig{
-			Hydrate:       listTenantMembers,
+			Hydrate: listTenantMembers,
 		},
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.AllColumns([]string{"tenant_id", "user_handle"}),
@@ -93,10 +93,12 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_INT,
 				Transform:   transform.FromCamel(),
 			},
+			// As user is a preserved keyword we can not use it as a column name. So renamed it to user_info.
 			{
-				Name:        "user",
+				Name:        "user_info",
 				Description: "The user details.",
 				Type:        proto.ColumnType_JSON,
+				Transform:   transform.FromField("User"),
 			},
 		}),
 	}
