@@ -107,7 +107,7 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 
 	// List the members for the tenant to which the calling user is in.
-	// For an unqualified (no tenant ID filter) list call, only call list members for the tenant ID of the actor.
+	// Only call list members for the tenant ID of the actor.
 	callerIdentity, err := getUserIdentity(ctx, d, h)
 	if err != nil {
 		return nil, err
