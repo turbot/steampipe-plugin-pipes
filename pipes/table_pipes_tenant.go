@@ -20,7 +20,7 @@ func tablePipesTenant(_ context.Context) *plugin.Table {
 			Hydrate: listTenants,
 		},
 		Get: &plugin.GetConfig{
-			KeyColumns: plugin.SingleColumn("id"),
+			KeyColumns: plugin.SingleColumn("handle"),
 			Hydrate:    getTenant,
 		},
 		Columns: commonColumns([]*plugin.Column{
@@ -214,10 +214,10 @@ func getTenant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 		plugin.Logger(ctx).Error("getTenant", "connection_error", err)
 		return nil, err
 	}
-	id := d.EqualsQuals["id"].GetStringValue()
+	handle := d.EqualsQuals["handle"].GetStringValue()
 
 	// check if id is empty
-	if id == "" {
+	if handle == "" {
 		return nil, nil
 	}
 
@@ -225,7 +225,7 @@ func getTenant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 
 	// execute get call
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-		resp, _, err = svc.Tenants.Get(ctx, id).Execute()
+		resp, _, err = svc.Tenants.Get(ctx, handle).Execute()
 		return resp, err
 	}
 

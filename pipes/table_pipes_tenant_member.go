@@ -19,7 +19,7 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 		List: &plugin.ListConfig{
 			ParentHydrate: listTenants,
 			Hydrate:       listTenantMembers,
-			KeyColumns: plugin.OptionalColumns([]string{"tenant_id", "tenant_handle"}),
+			KeyColumns:    plugin.OptionalColumns([]string{"tenant_id", "tenant_handle"}),
 		},
 		Get: &plugin.GetConfig{
 			KeyColumns: plugin.AllColumns([]string{"tenant_handle", "id"}),
@@ -40,7 +40,7 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "tenant_handle",
-				Description: "The identifier of the tenant.",
+				Description: "The handle name of the tenant.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromCamel(),
 			},
