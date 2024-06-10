@@ -45,10 +45,10 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Transform:   transform.FromCamel(),
 			},
 			{
-				Name:        "user_id",
+				Name:        "member_id",
 				Description: "The identifier of the user that belongs to the tenant.",
 				Type:        proto.ColumnType_STRING,
-				Transform:   transform.FromCamel(),
+				Transform:   transform.FromField("UserId"),
 			},
 			{
 				Name:        "email",
