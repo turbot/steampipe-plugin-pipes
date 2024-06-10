@@ -109,6 +109,12 @@ type tenantMember struct {
 func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	tenant := h.Item.(openapi.Tenant)
 
+	// Return nil for primary tenant.
+	// No, user will have owner access to the primary tenant.
+	if tenant.Handle == "turbot-pipes" {
+		return nil, nil
+	}
+
 	tenantId := d.EqualsQualString("tenant_id")
 	tenantHandle := d.EqualsQualString("tenant_handle")
 
@@ -170,7 +176,7 @@ func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 
 		if result.HasItems() {
 			for _, member := range *result.Items {
-				d.StreamListItem(ctx, tenantMember{tenant.Handle, member})
+				d.StreamListItem(ctx, &tenantMember{tenant.Handle, member})
 
 				// Context can be cancelled due to manual cancellation or the limit has been hit
 				if d.RowsRemaining(ctx) == 0 {
@@ -222,5 +228,5 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	res := response.(openapi.TenantUser)
 
-	return tenantMember{tenantHandle, res}, nil
+	return &tenantMember{tenantHandle, res}, nil
 }
