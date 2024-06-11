@@ -119,7 +119,7 @@ func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 	// Create Session
 	svc, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listTenantMembers", "connection_error", err)
+		plugin.Logger(ctx).Error("pipes_tenant_member.listTenantMembers", "connection_error", err)
 		return nil, err
 	}
 
@@ -158,7 +158,7 @@ func listTenantMembers(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
 
 		if err != nil {
-			plugin.Logger(ctx).Error("listTenantMembers", "list", err)
+			plugin.Logger(ctx).Error("pipes_tenant_member.listTenantMembers", "list", err)
 			return nil, err
 		}
 
@@ -190,7 +190,7 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 	// Create Session
 	svc, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getTenantMember", "connection_error", err)
+		plugin.Logger(ctx).Error("pipes_tenant_member.getTenantMember", "connection_error", err)
 		return nil, err
 	}
 	userHandle := d.EqualsQuals["user_handle"].GetStringValue()
@@ -212,7 +212,7 @@ func getTenantMember(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
 
 	if err != nil {
-		plugin.Logger(ctx).Error("getTenantMember", "get", err)
+		plugin.Logger(ctx).Error("pipes_tenant_member.getTenantMember", "get", err)
 		return nil, err
 	}
 
