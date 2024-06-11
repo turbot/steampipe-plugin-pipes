@@ -140,7 +140,7 @@ func listTenants(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData
 	// Create Session
 	svc, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("listTenants", "connection_error", err)
+		plugin.Logger(ctx).Error("pipes_tenant.listTenants", "connection_error", err)
 		return nil, err
 	}
 
@@ -189,7 +189,7 @@ func listTenants(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData
 			for _, tenant := range *result.Items {
 				d.StreamListItem(ctx, tenant)
 
-				// Context can be cancelled due to manual cancellation or the limit has been hit
+				// Context can be canceled due to manual cancellation or the limit has been hit
 				if d.RowsRemaining(ctx) == 0 {
 					return nil, nil
 				}
@@ -211,12 +211,12 @@ func getTenant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	// Create Session
 	svc, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("getTenant", "connection_error", err)
+		plugin.Logger(ctx).Error("pipes_tenant.getTenant", "connection_error", err)
 		return nil, err
 	}
 	handle := d.EqualsQuals["handle"].GetStringValue()
 
-	// check if id is empty
+	// check if handle is empty
 	if handle == "" {
 		return nil, nil
 	}
@@ -232,7 +232,7 @@ func getTenant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
 
 	if err != nil {
-		plugin.Logger(ctx).Error("getTenant", "get", err)
+		plugin.Logger(ctx).Error("pipes_tenant.getTenant", "get", err)
 		return nil, err
 	}
 
