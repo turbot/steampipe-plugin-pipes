@@ -5,7 +5,7 @@ go 1.21.0
 toolchain go1.21.1
 
 require (
-	github.com/turbot/pipes-sdk-go v0.7.0
+	github.com/turbot/pipes-sdk-go v0.9.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.10.1
 )
 
