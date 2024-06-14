@@ -1,3 +1,11 @@
+## v0.16.0 [2024-06-15]
+
+_What's new?_
+
+- New tables added
+  - [pipes_tenant](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_tenant) ([#35](https://github.com/turbot/steampipe-plugin-pipes/pull/35))
+  - [pipes_tenant_member](https://hub.steampipe.io/plugins/turbot/pipes/tables/pipes_tenant_member) ([#35](https://github.com/turbot/steampipe-plugin-pipes/pull/35))
+
 ## v0.15.0 [2024-05-22]
 
 _Enhancements_
