@@ -427,12 +427,21 @@ func getIdentityDetailsForConnection(ctx context.Context, d *plugin.QueryData, h
 	var identityId string
 	switch w := h.Item.(type) {
 	case openapi.Connection:
-		identityId = h.Item.(openapi.Connection).IdentityId
+		if h.Item.(openapi.Connection).IdentityId != nil {
+			identityId = *h.Item.(openapi.Connection).IdentityId
+		} else {
+			identityId = "" 
+		}
 	case *openapi.Connection:
-		identityId = h.Item.(*openapi.Connection).IdentityId
+		if h.Item.(*openapi.Connection).IdentityId != nil {
+			identityId = *h.Item.(*openapi.Connection).IdentityId
+		} else {
+			identityId = "" 
+		}
 	default:
 		plugin.Logger(ctx).Debug("getIdentityDetailsForConnection", "Unknown Type", w)
 	}
+	
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		resp, _, err := svc.Identities.Get(ctx, identityId).Execute()

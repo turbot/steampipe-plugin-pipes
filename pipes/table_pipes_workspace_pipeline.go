@@ -600,7 +600,7 @@ func getIdentityWorkspaceDetailsForPipeline(ctx context.Context, d *plugin.Query
 	default:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForPipeline", "Unknown Type", w)
 		// Since the parent id is of unknown type we can assume that its a get operation.
-		identityId := h.Item.(openapi.Pipeline).IdentityId
+		identityId := *h.Item.(openapi.Pipeline).IdentityId
 		workspaceId := h.Item.(openapi.Pipeline).WorkspaceId
 		getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 			if strings.HasPrefix(identityId, "u_") {

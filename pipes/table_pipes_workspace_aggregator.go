@@ -359,10 +359,11 @@ func getUserWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plu
 		return nil, err
 	}
 
-	var aggregator openapi.WorkspaceAggregator
+	var aggregator openapi.Aggregator
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		aggregator, _, err = svc.UserWorkspaceAggregators.Get(ctx, userHandle, workspaceHandle, aggregatorHandle).Execute()
+		// aggregator, _, err = svc.UserWorkspaceAggregators.Get(ctx, userHandle, workspaceHandle, aggregatorHandle).Execute()
 		return aggregator, err
 	}
 
@@ -372,7 +373,7 @@ func getUserWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plu
 		return nil, err
 	}
 
-	aggregator = response.(openapi.WorkspaceAggregator)
+	aggregator = response.(openapi.Aggregator)
 
 	return aggregator, nil
 }
@@ -385,7 +386,7 @@ func getOrgWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plug
 		return nil, err
 	}
 
-	var aggregator openapi.WorkspaceAggregator
+	var aggregator openapi.Aggregator
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		aggregator, _, err = svc.OrgWorkspaceAggregators.Get(ctx, orgHandle, workspaceHandle, aggregatorHandle).Execute()
@@ -398,7 +399,7 @@ func getOrgWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plug
 		return nil, err
 	}
 
-	aggregator = response.(openapi.WorkspaceAggregator)
+	aggregator = response.(openapi.Aggregator)
 
 	return aggregator, nil
 }
@@ -458,8 +459,8 @@ func getIdentityWorkspaceDetailsForAggregator(ctx context.Context, d *plugin.Que
 		// The default case will come up when the parent items does not exist which happens when a get call is executed instead of a list
 		// In a get call the parent hydrate is not executed and hence the parent item will not exist
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForAggregator", "Unknown Type", w)
-		identityId := h.Item.(openapi.WorkspaceAggregator).IdentityId
-		workspaceId := h.Item.(openapi.WorkspaceAggregator).WorkspaceId
+		identityId := *h.Item.(openapi.WorkspaceAggregator).IdentityId
+		workspaceId := *h.Item.(openapi.WorkspaceAggregator).WorkspaceId
 		getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 			if strings.HasPrefix(identityId, "u_") {
 				user, _, err := svc.Users.Get(ctx, identityId).Execute()
