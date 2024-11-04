@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-pipes
 go 1.22.4
 
 require (
-	github.com/turbot/pipes-sdk-go v0.9.0
+	github.com/turbot/pipes-sdk-go v0.11.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.10.4
 )
 
