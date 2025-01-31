@@ -427,9 +427,9 @@ func getIdentityDetailsForConnection(ctx context.Context, d *plugin.QueryData, h
 	var identityId string
 	switch w := h.Item.(type) {
 	case openapi.Connection:
-		identityId = h.Item.(openapi.Connection).IdentityId
+		identityId = *h.Item.(openapi.Connection).IdentityId
 	case *openapi.Connection:
-		identityId = h.Item.(*openapi.Connection).IdentityId
+		identityId = *h.Item.(*openapi.Connection).IdentityId
 	default:
 		plugin.Logger(ctx).Debug("getIdentityDetailsForConnection", "Unknown Type", w)
 	}

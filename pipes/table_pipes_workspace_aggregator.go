@@ -359,7 +359,7 @@ func getUserWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plu
 		return nil, err
 	}
 
-	var aggregator openapi.WorkspaceAggregator
+	var aggregator openapi.Aggregator
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		aggregator, _, err = svc.UserWorkspaceAggregators.Get(ctx, userHandle, workspaceHandle, aggregatorHandle).Execute()
@@ -372,7 +372,7 @@ func getUserWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plu
 		return nil, err
 	}
 
-	aggregator = response.(openapi.WorkspaceAggregator)
+	aggregator = response.(openapi.Aggregator)
 
 	return aggregator, nil
 }
@@ -385,7 +385,7 @@ func getOrgWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plug
 		return nil, err
 	}
 
-	var aggregator openapi.WorkspaceAggregator
+	var aggregator openapi.Aggregator
 
 	getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		aggregator, _, err = svc.OrgWorkspaceAggregators.Get(ctx, orgHandle, workspaceHandle, aggregatorHandle).Execute()
@@ -398,7 +398,7 @@ func getOrgWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plug
 		return nil, err
 	}
 
-	aggregator = response.(openapi.WorkspaceAggregator)
+	aggregator = response.(openapi.Aggregator)
 
 	return aggregator, nil
 }
@@ -461,26 +461,26 @@ func getIdentityWorkspaceDetailsForAggregator(ctx context.Context, d *plugin.Que
 		identityId := h.Item.(openapi.WorkspaceAggregator).IdentityId
 		workspaceId := h.Item.(openapi.WorkspaceAggregator).WorkspaceId
 		getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-			if strings.HasPrefix(identityId, "u_") {
-				user, _, err := svc.Users.Get(ctx, identityId).Execute()
+			if strings.HasPrefix(*identityId, "u_") {
+				user, _, err := svc.Users.Get(ctx, *identityId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.IdentityType = "user"
 				identityWorkspaceDetails.IdentityHandle = user.Handle
-				workspace, _, err := svc.UserWorkspaces.Get(ctx, identityId, workspaceId).Execute()
+				workspace, _, err := svc.UserWorkspaces.Get(ctx, *identityId, *workspaceId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.WorkspaceHandle = workspace.Handle
 			} else {
-				org, _, err := svc.Orgs.Get(ctx, identityId).Execute()
+				org, _, err := svc.Orgs.Get(ctx, *identityId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.IdentityType = "org"
 				identityWorkspaceDetails.IdentityHandle = org.Handle
-				workspace, _, err := svc.UserWorkspaces.Get(ctx, identityId, workspaceId).Execute()
+				workspace, _, err := svc.UserWorkspaces.Get(ctx, *identityId, *workspaceId).Execute()
 				if err != nil {
 					return nil, err
 				}

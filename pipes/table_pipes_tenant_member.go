@@ -82,6 +82,12 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Transform:   transform.FromCamel(),
 			},
 			{
+				Name:        "last_activity_at",
+				Description: "The time of the last activity for the member.",
+				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.FromCamel(),
+			},
+			{
 				Name:        "updated_by_id",
 				Description: "The ID of the user that performed the last update.",
 				Type:        proto.ColumnType_STRING,
