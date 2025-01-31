@@ -101,7 +101,7 @@ func tablePipesOrganizationMember(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "last_activity_at",
-				Description: "The time of the last activity for the member.",
+				Description: "Timestamp of the user's most recent activity.",
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
