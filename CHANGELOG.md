@@ -1,3 +1,13 @@
+## v1.1.0 [2025-01-31]
+
+_Enhancements_
+
+- Added the column `last_activity_at` to `pipes_organization_member`, `pipes_organization_workspace_member`,    `pipes_tenant_member` tables. ([#47](https://github.com/turbot/steampipe-plugin-pipes/pull/47))
+
+_Dependencies_
+
+- Recompiled plugin with [pipes-go-sdk v0.12.0](https://github.com/turbot/pipes-sdk-go/blob/main/CHANGELOG.md#0120-2025-01-31). ([#47](https://github.com/turbot/steampipe-plugin-pipes/pull/47)) 
+
 ## v1.0.0 [2024-10-22]
 
 There are no significant changes in this plugin version; it has been released to align with [Steampipe's v1.0.0](https://steampipe.io/changelog/steampipe-cli-v1-0-0) release. This plugin adheres to [semantic versioning](https://semver.org/#semantic-versioning-specification-semver), ensuring backward compatibility within each major version.
