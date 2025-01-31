@@ -67,7 +67,6 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Name:        "created_at",
 				Description: "The time of creation in ISO 8601 UTC.",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromCamel(),
 			},
 			{
 				Name:        "created_by_id",
@@ -79,7 +78,11 @@ func tablePipesTenantMember(_ context.Context) *plugin.Table {
 				Name:        "updated_at",
 				Description: "The time of the last update in ISO 8601 UTC.",
 				Type:        proto.ColumnType_TIMESTAMP,
-				Transform:   transform.FromCamel(),
+			},
+			{
+				Name:        "last_activity_at",
+				Description: "Timestamp of the user's most recent activity.",
+				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
 				Name:        "updated_by_id",

@@ -100,6 +100,11 @@ func tablePipesOrganizationMember(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
+				Name:        "last_activity_at",
+				Description: "Timestamp of the user's most recent activity.",
+				Type:        proto.ColumnType_TIMESTAMP,
+			},
+			{
 				Name:        "updated_by_id",
 				Description: "The unique identifier of the user who last updated the member.",
 				Type:        proto.ColumnType_STRING,

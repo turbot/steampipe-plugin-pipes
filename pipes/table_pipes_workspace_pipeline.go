@@ -603,26 +603,26 @@ func getIdentityWorkspaceDetailsForPipeline(ctx context.Context, d *plugin.Query
 		identityId := h.Item.(openapi.Pipeline).IdentityId
 		workspaceId := h.Item.(openapi.Pipeline).WorkspaceId
 		getDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-			if strings.HasPrefix(identityId, "u_") {
-				user, _, err := svc.Users.Get(ctx, identityId).Execute()
+			if strings.HasPrefix(*identityId, "u_") {
+				user, _, err := svc.Users.Get(ctx, *identityId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.IdentityType = "user"
 				identityWorkspaceDetails.IdentityHandle = user.Handle
-				workspace, _, err := svc.UserWorkspaces.Get(ctx, identityId, *workspaceId).Execute()
+				workspace, _, err := svc.UserWorkspaces.Get(ctx, *identityId, *workspaceId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.WorkspaceHandle = workspace.Handle
 			} else {
-				org, _, err := svc.Orgs.Get(ctx, identityId).Execute()
+				org, _, err := svc.Orgs.Get(ctx, *identityId).Execute()
 				if err != nil {
 					return nil, err
 				}
 				identityWorkspaceDetails.IdentityType = "org"
 				identityWorkspaceDetails.IdentityHandle = org.Handle
-				workspace, _, err := svc.UserWorkspaces.Get(ctx, identityId, *workspaceId).Execute()
+				workspace, _, err := svc.UserWorkspaces.Get(ctx, *identityId, *workspaceId).Execute()
 				if err != nil {
 					return nil, err
 				}
