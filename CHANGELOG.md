@@ -2,7 +2,7 @@
 
 _Enhancements_
 
-- Added the column `last_activity_at` to `pipes_organization_member`, `pipes_organization_workspace_member`,    `pipes_tenant_member` tables. ([#47](https://github.com/turbot/steampipe-plugin-pipes/pull/47))
+- Added the column `last_activity_at` to `pipes_organization_member`, `pipes_organization_workspace_member` and `pipes_tenant_member` tables. ([#47](https://github.com/turbot/steampipe-plugin-pipes/pull/47))
 
 _Dependencies_
 
