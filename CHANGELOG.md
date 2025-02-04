@@ -1,3 +1,9 @@
+## v1.1.1 [2025-02-04]
+
+_Bug fixes_
+
+- Fixed the Github workflows to correctly build the Steampipe anywhere plugin builds.
+
 ## v1.1.0 [2025-01-31]
 
 _Enhancements_
