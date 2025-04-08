@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_connection - Query Pipes Connections using SQL"
 description: "Allows users to query Pipes Connections, providing insights into the connection details, status, and configuration."
+folder: "Connection"
 ---
 
 # Table: pipes_connection - Query Pipes Connections using SQL

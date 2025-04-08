@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_audit_log - Query Pipes Audit Logs using SQL"
 description: "Allows users to query Pipes Audit Logs, specifically the logs that capture the activity within the Pipes service, providing insights into user interactions and potential security incidents."
+folder: "Audit Log"
 ---
 
 # Table: pipes_audit_log - Query Pipes Audit Logs using SQL

@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_user - Query Pipes User using SQL"
 description: "Allows users to query Pipes Users, specifically providing insights into user details, including user ID, name, and email."
+folder: "User"
 ---
 
 # Table: pipes_user - Query Pipes User using SQL

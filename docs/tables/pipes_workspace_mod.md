@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_mod - Query Pipes Workspace Modules using SQL"
 description: "Allows users to query Workspace in Pipes, specifically the details of each module in a workspace, providing insights into module configurations, versions, and dependencies."
+folder: "Mod"
 ---
 
 # Table: pipes_workspace_mod - Query Pipes Workspace Modules using SQL

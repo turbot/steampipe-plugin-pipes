@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_token - Query Pipes Tokens using SQL"
 description: "Allows users to query Pipes Tokens, specifically the token ID, creation time, and expiration time, providing insights into token usage and lifecycle management."
+folder: "Token"
 ---
 
 # Table: pipes_token - Query Pipes Tokens using SQL
