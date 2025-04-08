@@ -1,11 +1,9 @@
 module github.com/turbot/steampipe-plugin-pipes
 
-go 1.23.1
-
-toolchain go1.23.2
+go 1.23.2
 
 require (
-	github.com/turbot/pipes-sdk-go v0.12.0
+	github.com/turbot/pipes-sdk-go v0.12.1
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.11.4
 )
 
