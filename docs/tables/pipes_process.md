@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_process - Query Pipes Processes using SQL"
 description: "Allows users to query Pipes Processes, specifically the data related to the running processes in the Pipes plugin, providing insights into the process status, duration, and other details."
+folder: "Process"
 ---
 
 # Table: pipes_process - Query Pipes Processes using SQL

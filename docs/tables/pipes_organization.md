@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_organization - Query Pipes Organizations using SQL"
 description: "Allows users to query Pipes Organizations. The table provides details such as the organization's name, description, and the date it was created."
+folder: "Organization"
 ---
 
 # Table: pipes_organization - Query Pipes Organizations using SQL

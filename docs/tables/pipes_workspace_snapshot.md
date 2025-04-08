@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_snapshot - Query Pipes Workspace Snapshots using SQL"
 description: "Allows users to query Workspace Snapshots in Pipes, specifically snapshot details, providing insights into workspace data and potential changes."
+folder: "Snapshot"
 ---
 
 # Table: pipes_workspace_snapshot - Query Pipes Workspace Snapshots using SQL

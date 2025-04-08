@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_organization_workspace_member - Query Pipes Organization Workspace Members using SQL"
 description: "Allows users to query Pipes Organization Workspace Members, specifically to fetch data about the members associated with a particular workspace within an organization."
+folder: "Organization"
 ---
 
 # Table: pipes_organization_workspace_member - Query Pipes Organization Workspace Members using SQL

@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_connection - Query Pipes Workspace Connections using SQL"
 description: "Allows users to query Pipes Workspace Connections, specifically information about each connection within a workspace, providing insights into connection details, associated workspace, and other metadata."
+folder: "Connection"
 ---
 
 # Table: pipes_workspace_connection - Query Pipes Workspace Connections using SQL

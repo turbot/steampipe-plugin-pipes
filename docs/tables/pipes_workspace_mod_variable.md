@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_mod_variable - Query Pipes Workspace Mod Variables using SQL"
 description: "Allows users to query Pipes Workspace Mod Variables, providing detailed information about each variable in the workspace."
+folder: "Mod"
 ---
 
 # Table: pipes_workspace_mod_variable - Query Pipes Workspace Mod Variables using SQL

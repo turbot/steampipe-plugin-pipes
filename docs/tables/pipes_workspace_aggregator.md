@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_aggregator - Query Pipes Workspace Aggregators using SQL"
 description: "Allows users to query Pipes Workspace Aggregators, specifically providing insights into the data aggregation and transformation processes within a workspace."
+folder: "Workspace"
 ---
 
 # Table: pipes_workspace_aggregator - Query Pipes Workspace Aggregators using SQL

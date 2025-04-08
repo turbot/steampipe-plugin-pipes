@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace - Query Pipes Workspaces using SQL"
 description: "Allows users to query Pipes Workspaces, providing insights into workspace metadata such as creation time, last update time, and user information."
+folder: "Workspace"
 ---
 
 # Table: pipes_workspace - Query Pipes Workspaces using SQL

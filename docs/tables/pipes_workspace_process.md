@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_process - Query Pipes Workspace Processes using SQL"
 description: "Allows users to query Pipes Workspace Processes, providing detailed information about each workspace process including its status, workspace ID, workspace name, and more."
+folder: "Process"
 ---
 
 # Table: pipes_workspace_process - Query Pipes Workspace Processes using SQL

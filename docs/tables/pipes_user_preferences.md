@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_user_preferences - Query Pipes User Preferences using SQL"
 description: "Allows users to query User Preferences in Pipes, specifically the user-defined settings and preferences, providing insights into user behaviors and customization patterns."
+folder: "User"
 ---
 
 # Table: pipes_user_preferences - Query Pipes User Preferences using SQL

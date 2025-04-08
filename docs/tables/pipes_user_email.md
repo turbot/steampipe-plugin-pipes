@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_user_email - Query Pipes User Emails using SQL"
 description: "Allows users to query User Emails in Pipes, specifically the email address and associated user details, providing insights into user email data and potential anomalies."
+folder: "User"
 ---
 
 # Table: pipes_user_email - Query Pipes User Emails using SQL
