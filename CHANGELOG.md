@@ -1,3 +1,13 @@
+## v1.2.0 [2025-04-14]
+
+_Enhancements_
+
+- Added `folder` metadata to the documentation of all the Pipes tables for improved organization on the Steampipe Hub. ([#48](https://github.com/turbot/steampipe-plugin-pipes/pull/48))
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v5.11.5](https://github.com/turbot/steampipe-plugin-sdk/releases/tag/v5.11.5) ([#48](https://github.com/turbot/steampipe-plugin-pipes/pull/48))
+
 ## v1.1.1 [2025-02-04]
 
 _Bug fixes_
