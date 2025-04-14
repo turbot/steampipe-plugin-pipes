@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_tenant - Query Pipes Tenants using SQL"
 description: "Allows users to query Pipes Tenants, providing insights into tenant details such as creation time, update time, state, and usage thresholds, essential for tenant management and monitoring."
+folder: "Tenant"
 ---
 
 # Table: pipes_tenant - Query Pipes Tenants using SQL

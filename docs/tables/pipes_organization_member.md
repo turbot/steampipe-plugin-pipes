@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_organization_member - Query Pipes Organization Members using SQL"
 description: "Allows users to query Pipes Organization Members, specifically the membership details of users in an organization, providing insights into user roles, permissions, and participation in projects."
+folder: "Organization"
 ---
 
 # Table: pipes_organization_member - Query Pipes Organization Members using SQL

@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_pipeline - Query Pipes Workspace Pipelines using SQL"
 description: "Allows users to query Workspace Pipelines in Pipes, specifically the pipeline configuration, status, and related metadata, providing insights into the pipeline execution and its management."
+folder: "Pipeline"
 ---
 
 # Table: pipes_workspace_pipeline - Query Pipes Workspace Pipelines using SQL

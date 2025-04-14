@@ -1,6 +1,7 @@
 ---
 title: "Steampipe Table: pipes_workspace_db_log - Query Pipes Workspace Database Logs using SQL"
 description: "Allows users to query Pipes Workspace Database Logs. This table provides detailed information about all the logs related to the workspace database in the Pipes service."
+folder: "Database Log"
 ---
 
 # Table: pipes_workspace_db_log - Query Pipes Workspace Database Logs using SQL
