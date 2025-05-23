@@ -1,3 +1,10 @@
+## v1.3.0 [2025-05-23]
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v5.11.6](https://github.com/turbot/steampipe-plugin-sdk/blob/develop/CHANGELOG.md#v5116-2025-05-22) which improves how errors are handled during query execution.
+- Recompile plugin with [pipes-sdk-go v0.14.0](https://github.com/turbot/pipes-sdk-go/blob/main/CHANGELOG.md#0140-2025-05-22). ([#50](https://github.com/turbot/steampipe-plugin-pipes/pull/50))
+
 ## v1.2.0 [2025-04-14]
 
 _Enhancements_
