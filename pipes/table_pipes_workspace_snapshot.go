@@ -23,12 +23,45 @@ type SnapshotData struct {
 	Data openapi.WorkspaceSnapshotData
 }
 
+var getIdentityWorkspaceDetailsCached = plugin.HydrateFunc(getIdentityWorkspaceDetails).WithCache()
+var getSnapshotDataCached = plugin.HydrateFunc(getSnapshotData).WithCache()
+
+// Wrapper functions for cached hydrates when used as column hydrates
+func getIdentityWorkspaceDetailsWrapper(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	return getIdentityWorkspaceDetailsCached(ctx, d, h)
+}
+
+func getSnapshotDataWrapper(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	return getSnapshotDataCached(ctx, d, h)
+}
+
+var retryConfigSnapshots = &plugin.RetryConfig{
+	ShouldRetryError: shouldRetryError,
+	BackoffAlgorithm: "Exponential",
+	RetryInterval:    250,  // ms
+	CappedDuration:   2000, // ms
+	MaxAttempts:      12,
+	MaxDuration:      30, // seconds
+}
+
 //// TABLE DEFINITION
 
 func tablePipesWorkspaceSnapshot(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "pipes_workspace_snapshot",
 		Description: "Snapshots are point in time captures of dashboard runs in a workspace.",
+		HydrateConfig: []plugin.HydrateConfig{
+			{
+				Func:           getSnapshotData,
+				MaxConcurrency: 2,
+				RetryConfig:    retryConfigSnapshots,
+			},
+			{
+				Func:           getIdentityWorkspaceDetails,
+				MaxConcurrency: 5,
+				RetryConfig:    retryConfigSnapshots,
+			},
+		},
 		List: &plugin.ListConfig{
 			ParentHydrate: listWorkspaces,
 			Hydrate:       listWorkspaceSnapshots,
@@ -86,13 +119,13 @@ func tablePipesWorkspaceSnapshot(_ context.Context) *plugin.Table {
 				Name:        "identity_handle",
 				Description: "The handle of the identity.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetails,
+				Hydrate:     getIdentityWorkspaceDetailsWrapper,
 			},
 			{
 				Name:        "identity_type",
 				Description: "The type of identity, can be org/user.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetails,
+				Hydrate:     getIdentityWorkspaceDetailsWrapper,
 			},
 			{
 				Name:        "workspace_id",
@@ -104,7 +137,7 @@ func tablePipesWorkspaceSnapshot(_ context.Context) *plugin.Table {
 				Name:        "workspace_handle",
 				Description: "The handle of the workspace.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetails,
+				Hydrate:     getIdentityWorkspaceDetailsWrapper,
 			},
 			{
 				Name:        "state",
@@ -146,7 +179,7 @@ func tablePipesWorkspaceSnapshot(_ context.Context) *plugin.Table {
 				Name:        "data",
 				Description: "The data for the snapshot.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getSnapshotData,
+				Hydrate:     getSnapshotDataWrapper,
 			},
 			{
 				Name:        "query_where",
@@ -316,7 +349,7 @@ func listUserWorkspaceSnapshots(ctx context.Context, d *plugin.QueryData, h *plu
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, retryConfigSnapshots)
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceSnapshots", "list", err)
@@ -417,7 +450,7 @@ func listOrgWorkspaceSnapshots(ctx context.Context, d *plugin.QueryData, h *plug
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, retryConfigSnapshots)
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgWorkspaceSnapshots", "list", err)
@@ -494,7 +527,7 @@ func getUserWorkspaceSnapshot(ctx context.Context, d *plugin.QueryData, h *plugi
 		return snapshot, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, retryConfigSnapshots)
 	if err != nil {
 		plugin.Logger(ctx).Error("getUserWorkspaceSnapshot", "get", err)
 		return nil, err
@@ -518,7 +551,7 @@ func getOrgWorkspaceSnapshot(ctx context.Context, d *plugin.QueryData, h *plugin
 		return snapshot, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, retryConfigSnapshots)
 	if err != nil {
 		plugin.Logger(ctx).Error("getOrgWorkspaceSnapshot", "get", err)
 		return nil, err
@@ -555,7 +588,7 @@ func getIdentityWorkspaceDetails(ctx context.Context, d *plugin.QueryData, h *pl
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, retryConfigSnapshots)
 		return identityWorkspaceDetails, nil
 	default:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetails", "Unknown Type", w)
@@ -576,7 +609,7 @@ func getIdentityWorkspaceDetails(ctx context.Context, d *plugin.QueryData, h *pl
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, retryConfigSnapshots)
 
 	getWorkspaceDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		if strings.HasPrefix(identityId, "u_") {
@@ -589,7 +622,7 @@ func getIdentityWorkspaceDetails(ctx context.Context, d *plugin.QueryData, h *pl
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, retryConfigSnapshots)
 
 	return identityWorkspaceDetails, nil
 }
@@ -621,7 +654,7 @@ func getSnapshotData(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		snapshotData.Data = response
 		return nil, nil
 	}
-	_, err = plugin.RetryHydrate(ctx, d, h, getSnapshotData, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, err = plugin.RetryHydrate(ctx, d, h, getSnapshotData, retryConfigSnapshots)
 
 	return snapshotData, nil
 }
