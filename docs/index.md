@@ -22,7 +22,7 @@ For example:
 ```sql
 select
   user_handle,
-  email,
+  role,
   status
 from
   pipes_organization_member
@@ -31,13 +31,14 @@ where
 ```
 
 ```
-> select user_handle, email, status from pipes_organization_member where status = 'accepted';
-+-------------+------------------+----------+
-| user_handle | email            | status   |
-+-------------+------------------+----------+
-| mario       | mario@turbot.com | accepted |
-| yoshi       | yoshi@turbot.com | accepted |
-+-------------+------------------+----------+
+> select user_handle, role, status from pipes_organization_member where status = 'accepted';
++---------------------+--------+----------+
+| user_handle         | role   | status   |
++---------------------+--------+----------+
+| victor-ujkk         | owner  | accepted |
+| graza-io            | owner  | accepted |
+| mattystratton-volw  | owner  | accepted |
++---------------------+--------+----------+
 ```
 
 ## Documentation
