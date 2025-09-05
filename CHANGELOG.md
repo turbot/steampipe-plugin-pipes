@@ -1,3 +1,9 @@
+## v1.4.0 [2025-09-05]
+
+_Enhancements_
+
+- Added `DefaultRetryConfig` to the plugin, enabling automatic retries on rate limit errors and improving overall query stability and performance. ([#55](https://github.com/turbot/steampipe-plugin-pipes/pull/55))
+
 ## v1.3.0 [2025-05-23]
 
 _Dependencies_
