@@ -117,7 +117,7 @@ func listTokens(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData)
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listTokens", "list", err)
@@ -173,7 +173,7 @@ func getToken(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	token := response.(openapi.Token)
 

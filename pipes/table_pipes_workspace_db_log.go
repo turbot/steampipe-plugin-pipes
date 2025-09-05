@@ -134,10 +134,6 @@ func listWorkspaceDBLogs(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 		return nil, err
 	}
 
-	if err != nil {
-		plugin.Logger(ctx).Error("listDBLogs", "error", err)
-		return nil, err
-	}
 	return nil, nil
 }
 
@@ -162,7 +158,7 @@ func listUserWorkspaceDBLogs(ctx context.Context, d *plugin.QueryData, h *plugin
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserDBLogs", "list", err)
@@ -212,7 +208,7 @@ func listOrgWorkspaceDBLogs(ctx context.Context, d *plugin.QueryData, h *plugin.
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgDBLogs", "list", err)

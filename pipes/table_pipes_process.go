@@ -201,7 +201,7 @@ func listUserProcesses(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_process.listUserProcesses", "query_error", err)
@@ -255,7 +255,7 @@ func listOrgProcesses(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_process.listOrgProcesses", "query_error", err)
@@ -331,7 +331,7 @@ func getUserProcess(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 		return process, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("pipes_process.getUserProcess", "query_error", err)
 		return nil, err
@@ -355,7 +355,7 @@ func getOrgProcess(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 		return process, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("pipes_process.getOrgProcess", "query_error", err)
 		return nil, err

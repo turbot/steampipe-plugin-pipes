@@ -192,7 +192,7 @@ func listUserWorkspaceConnectionAssociations(ctx context.Context, d *plugin.Quer
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceConnectionAssociations", "list", err)
@@ -242,7 +242,7 @@ func listOrgWorkspaceConnectionAssociations(ctx context.Context, d *plugin.Query
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgWorkspaceConnectionAssociations", "list", err)
@@ -299,7 +299,7 @@ func getIdentityWorkspaceDetailsForWorkspaceConn(ctx context.Context, d *plugin.
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		return identityWorkspaceDetails, nil
 	default:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForWorkspaceConn", "Unknown Type", w)
@@ -320,7 +320,7 @@ func getIdentityWorkspaceDetailsForWorkspaceConn(ctx context.Context, d *plugin.
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, &plugin.RetryConfig{})
 
 	getWorkspaceDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		if strings.HasPrefix(identityId, "u_") {
@@ -333,7 +333,7 @@ func getIdentityWorkspaceDetailsForWorkspaceConn(ctx context.Context, d *plugin.
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, &plugin.RetryConfig{})
 
 	return identityWorkspaceDetails, nil
 }

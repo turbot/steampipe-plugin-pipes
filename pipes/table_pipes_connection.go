@@ -11,6 +11,12 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
+var getIdentityDetailsForConnectionCached = plugin.HydrateFunc(getIdentityDetailsForConnection).WithCache()
+
+func getIdentityDetailsColumn(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	return getIdentityDetailsForConnectionCached(ctx, d, h)
+}
+
 //// TABLE DEFINITION
 
 func tablePipesConnection(_ context.Context) *plugin.Table {
@@ -56,13 +62,13 @@ func tablePipesConnection(_ context.Context) *plugin.Table {
 				Name:        "identity_handle",
 				Description: "The handle name for an identity where the connection has been created.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityDetailsForConnection,
+				Hydrate:     getIdentityDetailsColumn,
 			},
 			{
 				Name:        "identity_type",
 				Description: "The type of identity, which can be 'user' or 'org'.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityDetailsForConnection,
+				Hydrate:     getIdentityDetailsColumn,
 			},
 			{
 				Name:        "type",
@@ -140,8 +146,13 @@ func listConnections(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 
 	user := commonData.(openapi.User)
 
-	identityHandle := d.EqualsQuals["identity_handle"].GetStringValue()
-	identityId := d.EqualsQuals["identity_id"].GetStringValue()
+	var identityHandle, identityId string
+	if d.EqualsQuals["identity_handle"] != nil {
+		identityHandle = d.EqualsQuals["identity_handle"].GetStringValue()
+	}
+	if d.EqualsQuals["identity_id"] != nil {
+		identityId = d.EqualsQuals["identity_id"].GetStringValue()
+	}
 
 	// If the requested number of items is less than the paging max limit
 	// set the limit to that instead
@@ -197,7 +208,7 @@ func listOrgConnections(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgConnections", "list", err)
@@ -245,7 +256,7 @@ func listUserConnections(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserConnections", "list", err)
@@ -294,7 +305,7 @@ func listActorConnections(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listActorConnections", "list", err)
@@ -380,7 +391,7 @@ func getOrgConnection(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	connection := response.(openapi.Connection)
 
@@ -403,7 +414,7 @@ func getUserConnection(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	connection := response.(openapi.Connection)
 
@@ -439,7 +450,7 @@ func getIdentityDetailsForConnection(ctx context.Context, d *plugin.QueryData, h
 		return resp, err
 	}
 
-	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	identity := response.(openapi.Identity)
 
 	return &IdentityDetails{IdentityHandle: identity.Handle, IdentityType: identity.Type}, nil

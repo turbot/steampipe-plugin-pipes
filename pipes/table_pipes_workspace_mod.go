@@ -212,7 +212,7 @@ func listUserWorkspaceMods(ctx context.Context, d *plugin.QueryData, h *plugin.H
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceMods", "list", err)
@@ -262,7 +262,7 @@ func listOrgWorkspaceMods(ctx context.Context, d *plugin.QueryData, h *plugin.Hy
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceMods", "list", err)
@@ -349,7 +349,7 @@ func getUserWorkspaceMod(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	workspaceMod := response.(openapi.WorkspaceMod)
 
@@ -372,7 +372,7 @@ func getOrgWorkspaceMod(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	workspaceMod := response.(openapi.WorkspaceMod)
 
@@ -412,7 +412,7 @@ func getIdentityWorkspaceDetailsForWorkspaceMod(ctx context.Context, d *plugin.Q
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		return identityWorkspaceDetails, nil
 	default:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForWorkspaceMod", "Unknown Type", w)
@@ -433,7 +433,7 @@ func getIdentityWorkspaceDetailsForWorkspaceMod(ctx context.Context, d *plugin.Q
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getIdentityDetails, &plugin.RetryConfig{})
 
 	getWorkspaceDetails := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 		if strings.HasPrefix(identityId, "u_") {
@@ -446,7 +446,7 @@ func getIdentityWorkspaceDetailsForWorkspaceMod(ctx context.Context, d *plugin.Q
 			return nil, err
 		}
 	}
-	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	_, _ = plugin.RetryHydrate(ctx, d, h, getWorkspaceDetails, &plugin.RetryConfig{})
 
 	return identityWorkspaceDetails, nil
 }

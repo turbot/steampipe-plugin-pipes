@@ -176,7 +176,7 @@ func listTenants(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listTenants", "list", err)
@@ -229,7 +229,7 @@ func getTenant(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) 
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	if err != nil {
 		plugin.Logger(ctx).Error("pipes_tenant.getTenant", "get", err)

@@ -17,6 +17,14 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		DefaultIgnoreConfig: &plugin.IgnoreConfig{
 			ShouldIgnoreErrorFunc: shouldIgnoreErrors([]string{"404"}),
 		},
+		DefaultRetryConfig: &plugin.RetryConfig{
+			ShouldRetryErrorFunc: shouldRetryErrorFunc,
+			BackoffAlgorithm:     "Exponential",
+			RetryInterval:        250,  // milliseconds - initial delay between retries
+			CappedDuration:       2000, // milliseconds - maximum delay between retries
+			MaxAttempts:          12,   // maximum number of retry attempts
+			MaxDuration:          30,   // seconds - total time limit for all retries
+		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},

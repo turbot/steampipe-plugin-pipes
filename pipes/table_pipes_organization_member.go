@@ -150,10 +150,6 @@ func listOrganizationMembers(ctx context.Context, d *plugin.QueryData, h *plugin
 		return nil, err
 	}
 
-	if err != nil {
-		plugin.Logger(ctx).Error("listOrganizationMembers", "error", err)
-		return nil, err
-	}
 	return nil, nil
 }
 
@@ -182,7 +178,7 @@ func listOrgMembers(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgMembers", "list", err)
@@ -234,7 +230,7 @@ func getOrganizationMember(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		return orgUser, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	orgUser = response.(openapi.OrgUser)
 
@@ -269,7 +265,7 @@ func getOrgDetails(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDa
 		return resp, err
 	}
 
-	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	return &OrgDetails{OrgHandle: response.(openapi.Org).Handle}, nil
 }

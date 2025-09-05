@@ -20,10 +20,15 @@ func shouldIgnoreErrors(notFoundErrors []string) plugin.ErrorPredicateWithContex
 	}
 }
 
+// Legacy function - kept for backward compatibility
 func shouldRetryError(err error) bool {
 	if strings.Contains(err.Error(), "429") {
 		log.Printf("[WARN] Received Rate Limit Error")
 		return true
 	}
 	return false
+}
+
+func shouldRetryErrorFunc(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData, err error) bool {
+	return shouldRetryError(err)
 }
