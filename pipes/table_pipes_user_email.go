@@ -99,7 +99,7 @@ func listUserEmails(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserEmails", "list", err)

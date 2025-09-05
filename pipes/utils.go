@@ -63,7 +63,7 @@ func getUserIdentityUncached(ctx context.Context, d *plugin.QueryData, h *plugin
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	if err != nil {
 		plugin.Logger(ctx).Error("GetUserIdentity", "error", err)

@@ -85,7 +85,7 @@ func getUserPreferences(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 	}
 
 	// Execute function to fetch the user preferences
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getUserPreferences", "error", err)
 		return nil, err

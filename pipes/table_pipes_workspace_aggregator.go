@@ -235,7 +235,7 @@ func listUserWorkspaceAggregators(ctx context.Context, d *plugin.QueryData, h *p
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_workspace_aggregator.listUserWorkspaceAggregators", "query_error", err)
@@ -289,7 +289,7 @@ func listOrgWorkspaceAggregators(ctx context.Context, d *plugin.QueryData, h *pl
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_workspace_aggregator.listOrgWorkspaceAggregators", "query_error", err)
@@ -366,7 +366,7 @@ func getUserWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plu
 		return aggregator, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("pipes_workspace_aggregator.getUserWorkspaceAggregator", "retry_error", err)
 		return nil, err
@@ -392,7 +392,7 @@ func getOrgWorkspaceAggregator(ctx context.Context, d *plugin.QueryData, h *plug
 		return aggregator, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getOrgWorkspaceAggregator", "get", err)
 		return nil, err
@@ -432,7 +432,7 @@ func getIdentityWorkspaceDetailsForAggregator(ctx context.Context, d *plugin.Que
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		return identityWorkspaceDetails, nil
 	case *openapi.Workspace:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForAggregator", "*openapi.Workspace")
@@ -451,7 +451,7 @@ func getIdentityWorkspaceDetailsForAggregator(ctx context.Context, d *plugin.Que
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForAggregator", "identityWorkspaceDetails", identityWorkspaceDetails)
 		return &identityWorkspaceDetails, nil
 	default:
@@ -488,7 +488,7 @@ func getIdentityWorkspaceDetailsForAggregator(ctx context.Context, d *plugin.Que
 			}
 			return nil, nil
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForAggregator", "identityWorkspaceDetails", identityWorkspaceDetails)
 		return &identityWorkspaceDetails, err
 	}

@@ -19,6 +19,18 @@ type IdentityWorkspaceDetailsForProcess struct {
 	WorkspaceHandle string `json:"workspace_handle"`
 }
 
+// Create a cached version of the identity details function
+var getIdentityWorkspaceDetailsForWorkspaceProcessCached = plugin.HydrateFunc(getIdentityWorkspaceDetailsForWorkspaceProcess).WithCache()
+
+// Create a wrapper for column hydration
+func getIdentityWorkspaceDetailsColumn(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	data, err := getIdentityWorkspaceDetailsForWorkspaceProcessCached(ctx, d, h)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
 //// TABLE DEFINITION
 
 func tablePipesWorkspaceProcess(_ context.Context) *plugin.Table {
@@ -86,6 +98,16 @@ func tablePipesWorkspaceProcess(_ context.Context) *plugin.Table {
 			KeyColumns: plugin.AllColumns([]string{"identity_handle", "workspace_handle", "id"}),
 			Hydrate:    getWorkspaceProcess,
 		},
+		HydrateConfig: []plugin.HydrateConfig{
+			{
+				Func:           getIdentityWorkspaceDetailsForWorkspaceProcess,
+				MaxConcurrency: 5,
+			},
+			{
+				Func:           listWorkspaceProcesses,
+				MaxConcurrency: 2,
+			},
+		},
 		Columns: commonColumns([]*plugin.Column{
 			{
 				Name:        "id",
@@ -103,13 +125,13 @@ func tablePipesWorkspaceProcess(_ context.Context) *plugin.Table {
 				Name:        "identity_handle",
 				Description: "The handle of the identity.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetailsForWorkspaceProcess,
+				Hydrate:     getIdentityWorkspaceDetailsColumn,
 			},
 			{
 				Name:        "identity_type",
 				Description: "The type of identity, can be org/user.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetailsForWorkspaceProcess,
+				Hydrate:     getIdentityWorkspaceDetailsColumn,
 			},
 			{
 				Name:        "workspace_id",
@@ -121,7 +143,7 @@ func tablePipesWorkspaceProcess(_ context.Context) *plugin.Table {
 				Name:        "workspace_handle",
 				Description: "The handle of the workspace.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getIdentityWorkspaceDetailsForWorkspaceProcess,
+				Hydrate:     getIdentityWorkspaceDetailsColumn,
 			},
 			{
 				Name:        "pipeline_id",
@@ -321,7 +343,7 @@ func listUserWorkspaceProcesses(ctx context.Context, d *plugin.QueryData, h *plu
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceProcesses", "list", err)
@@ -422,7 +444,7 @@ func listOrgWorkspaceProcesses(ctx context.Context, d *plugin.QueryData, h *plug
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgWorkspaceProcesses", "list", err)
@@ -499,7 +521,7 @@ func getUserWorkspaceProcess(ctx context.Context, d *plugin.QueryData, h *plugin
 		return process, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getUserWorkspaceProcess", "get", err)
 		return nil, err
@@ -523,7 +545,7 @@ func getOrgWorkspaceProcess(ctx context.Context, d *plugin.QueryData, h *plugin.
 		return process, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getOrgWorkspaceProcess", "get", err)
 		return nil, err
@@ -561,7 +583,7 @@ func getIdentityWorkspaceDetailsForWorkspaceProcess(ctx context.Context, d *plug
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		return identityWorkspaceDetails, nil
 	case *openapi.Workspace:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForWorkspaceProcess", "*openapi.Workspace")
@@ -580,7 +602,7 @@ func getIdentityWorkspaceDetailsForWorkspaceProcess(ctx context.Context, d *plug
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForWorkspaceProcess", "identityWorkspaceDetails", identityWorkspaceDetails)
 		return &identityWorkspaceDetails, nil
 	default:

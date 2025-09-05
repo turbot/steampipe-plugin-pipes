@@ -206,7 +206,7 @@ func listUserWorkspaceModVariables(ctx context.Context, d *plugin.QueryData, h *
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceModVariables", "list", err)
@@ -256,7 +256,7 @@ func listOrgWorkspaceModVariables(ctx context.Context, d *plugin.QueryData, h *p
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaceModVariables", "list", err)

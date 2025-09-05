@@ -177,7 +177,7 @@ func listOrgAuditLogs(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgAuditLogs", "list", err)
@@ -227,7 +227,7 @@ func listUserAuditLogs(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserAuditLogs", "list", err)

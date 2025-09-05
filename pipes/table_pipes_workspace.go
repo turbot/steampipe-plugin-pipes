@@ -221,7 +221,7 @@ func listUserWorkspaces(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listUserWorkspaces", "list", err)
@@ -272,7 +272,7 @@ func listOrgWorkspaces(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgWorkspaces", "list", err)
@@ -323,7 +323,7 @@ func listActorWorkspaces(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listActorWorkspaces", "list", err)
@@ -409,7 +409,7 @@ func getOrgWorkspace(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	workspace := response.(openapi.Workspace)
 
@@ -432,7 +432,7 @@ func getUserWorkspace(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 		return resp, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 
 	workspace := response.(openapi.Workspace)
 
@@ -468,7 +468,7 @@ func getIdentityDetails(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 		return resp, err
 	}
 
-	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	identity := response.(openapi.Identity)
 
 	return &IdentityDetails{IdentityHandle: identity.Handle, IdentityType: identity.Type}, nil

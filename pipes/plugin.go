@@ -20,10 +20,10 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		DefaultRetryConfig: &plugin.RetryConfig{
 			ShouldRetryErrorFunc: shouldRetryErrorFunc,
 			BackoffAlgorithm:     "Exponential",
-			RetryInterval:        250,
-			CappedDuration:       2000,
-			MaxAttempts:          12,
-			MaxDuration:          30,
+			RetryInterval:        250,  // milliseconds - initial delay between retries
+			CappedDuration:       2000, // milliseconds - maximum delay between retries
+			MaxAttempts:          12,   // maximum number of retry attempts
+			MaxDuration:          30,   // seconds - total time limit for all retries
 		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,

@@ -335,7 +335,7 @@ func listUserWorkspacePipelines(ctx context.Context, d *plugin.QueryData, h *plu
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_workspace_pipeline.listUserWorkspacePipelines", "query_error", err)
@@ -436,7 +436,7 @@ func listOrgWorkspacePipelines(ctx context.Context, d *plugin.QueryData, h *plug
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("pipes_workspace_pipeline.listOrgWorkspacePipelines", "query_error", err)
@@ -513,7 +513,7 @@ func getUserWorkspacePipeline(ctx context.Context, d *plugin.QueryData, h *plugi
 		return pipeline, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getUserWorkspacePipeline", "get", err)
 		return nil, err
@@ -537,7 +537,7 @@ func getOrgWorkspacePipeline(ctx context.Context, d *plugin.QueryData, h *plugin
 		return pipeline, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 	if err != nil {
 		plugin.Logger(ctx).Error("getOrgWorkspacePipeline", "get", err)
 		return nil, err
@@ -575,7 +575,7 @@ func getIdentityWorkspaceDetailsForPipeline(ctx context.Context, d *plugin.Query
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		return identityWorkspaceDetails, nil
 	case *openapi.Workspace:
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForPipeline", "*openapi.Workspace")
@@ -594,7 +594,7 @@ func getIdentityWorkspaceDetailsForPipeline(ctx context.Context, d *plugin.Query
 				return nil, err
 			}
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForPipeline", "identityWorkspaceDetails", identityWorkspaceDetails)
 		return &identityWorkspaceDetails, nil
 	default:
@@ -630,7 +630,7 @@ func getIdentityWorkspaceDetailsForPipeline(ctx context.Context, d *plugin.Query
 			}
 			return nil, nil
 		}
-		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		_, _ = plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{})
 		plugin.Logger(ctx).Debug("getIdentityWorkspaceDetailsForAggregator", "identityWorkspaceDetails", identityWorkspaceDetails)
 		return &identityWorkspaceDetails, err
 	}
