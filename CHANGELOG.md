@@ -4,6 +4,11 @@ _Enhancements_
 
 - Added `DefaultRetryConfig` to the plugin, enabling automatic retries on rate limit errors and improving overall query stability and performance. ([#55](https://github.com/turbot/steampipe-plugin-pipes/pull/55))
 
+_Dependencies_
+
+- Recompiled plugin with Go version `1.24`. ([#52](https://github.com/turbot/steampipe-plugin-pipes/pull/52))
+- Recompiled plugin with [steampipe-plugin-sdk v5.13.0](https://github.com/turbot/steampipe-plugin-sdk/blob/develop/CHANGELOG.md#v5130-2025-07-21) that addresses critical and high vulnerabilities in dependent packages. ([#52](https://github.com/turbot/steampipe-plugin-pipes/pull/52))
+
 ## v1.3.0 [2025-05-23]
 
 _Dependencies_
