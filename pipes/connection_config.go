@@ -8,7 +8,7 @@ import (
 	"os"
 
 	openapiclient "github.com/turbot/pipes-sdk-go"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 type pipesConfig struct {
@@ -22,10 +22,10 @@ func ConfigInstance() interface{} {
 
 // GetConfig :: retrieve and cast connection config from query data
 func GetConfig(connection *plugin.Connection) pipesConfig {
-	if connection == nil || connection.Config == nil {
+	if connection == nil || connection.GetConfig() == nil {
 		return pipesConfig{}
 	}
-	config, _ := connection.Config.(pipesConfig)
+	config, _ := connection.GetConfig().(pipesConfig)
 	return config
 }
 

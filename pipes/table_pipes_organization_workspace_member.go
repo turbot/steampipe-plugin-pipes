@@ -6,9 +6,9 @@ import (
 
 	openapi "github.com/turbot/pipes-sdk-go"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 type OrgWorkspaceDetails struct {
@@ -200,7 +200,7 @@ func listOrgWorkspaceMembers(ctx context.Context, d *plugin.QueryData, h *plugin
 			}
 		}
 
-		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, err := plugin.RetryHydrate(ctx, d, h, listDetails, &plugin.RetryConfig{ShouldRetryErrorFunc: shouldRetryErrorFunc})
 
 		if err != nil {
 			plugin.Logger(ctx).Error("listOrgWorkspaceMembers", "list", err)
@@ -253,7 +253,7 @@ func getOrganizationWorkspaceMember(ctx context.Context, d *plugin.QueryData, h 
 		return orgWorkspaceUser, err
 	}
 
-	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, err := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryErrorFunc: shouldRetryErrorFunc})
 
 	orgWorkspaceUser = response.(openapi.OrgWorkspaceUser)
 
@@ -281,7 +281,7 @@ func getOrgWorkspaceDetails(ctx context.Context, d *plugin.QueryData, h *plugin.
 			resp, _, err := svc.Orgs.Get(ctx, h.ParentItem.(openapi.Workspace).IdentityId).Execute()
 			return resp, err
 		}
-		response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+		response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryErrorFunc: shouldRetryErrorFunc})
 		return &OrgWorkspaceDetails{OrgHandle: response.(openapi.Org).Handle, WorkspaceHandle: w.Handle}, nil
 	default:
 		plugin.Logger(ctx).Debug("getOrgDetails", "Unknown Type", w)
@@ -291,7 +291,7 @@ func getOrgWorkspaceDetails(ctx context.Context, d *plugin.QueryData, h *plugin.
 		resp, _, err := svc.Orgs.Get(ctx, h.Item.(openapi.OrgWorkspaceUser).OrgId).Execute()
 		return resp, err
 	}
-	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+	response, _ := plugin.RetryHydrate(ctx, d, h, getDetails, &plugin.RetryConfig{ShouldRetryErrorFunc: shouldRetryErrorFunc})
 
 	return &OrgWorkspaceDetails{OrgHandle: response.(openapi.Org).Handle, WorkspaceHandle: h.Item.(openapi.OrgWorkspaceUser).WorkspaceHandle}, nil
 }
