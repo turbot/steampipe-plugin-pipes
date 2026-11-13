@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 func shouldIgnoreErrors(notFoundErrors []string) plugin.ErrorPredicateWithContext {
